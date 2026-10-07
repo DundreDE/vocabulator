@@ -1,7 +1,7 @@
-// import { getcards} from "";
+"use client";
+import LearningCards from "../components/LearningCards";
 
 interface card { 
-
     front: string;
     back: string;
     learned: boolean;
@@ -9,7 +9,6 @@ interface card {
 }
 
 interface deck {
-
     name: string;
     cards: card[];
     completed: boolean; 
@@ -20,14 +19,12 @@ interface deck {
 
 export default function LearningCardspage() {
     return (
-        <main>
-            <div className="flex min-h-screen items-center justify-center p-6">
-                <div className="flex min-h-screen justify-center p-6">
-                    <h1 className="text-2xl font-bold">Learn your deck</h1>
-                </div>
-                <div className="">
-                    
-                </div>
+       <main className="relative flex min-h-screen items-center justify-center p-6">
+            <div className="relative">
+                <h1 className="absolute bottom-full mb-[10px] w-full text-center text-2xl font-bold">
+                    Learn your deck
+                </h1>
+                <LearningCards />
             </div>
         </main>
     );
