@@ -3,7 +3,7 @@
 import { AuthPage } from "@/app/components/AuthPage";
 import { User } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
-import { getSupabaseBrowserClient } from "@/lib/supabaseclient";
+// import { getSupabaseBrowserClient } from "@/lib/supabaseclient";
 
 interface AuthPageProps {
   user: User | null;
@@ -11,6 +11,3 @@ interface AuthPageProps {
 
 type Mode = "sign-in" | "sign-up";
 
-export function Auth() {
-
-}
