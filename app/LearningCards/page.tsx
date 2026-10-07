@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/dist/client/link";
 import LearningCards from "../components/LearningCards";
+import Navbar from "../components/navbar";
 
 interface card { 
     front: string;
@@ -18,6 +19,7 @@ interface deck {
 
 export default function LearningCardspage() {
     return (
+      
        <main className="relative flex min-h-screen items-center justify-center p-6">
             <div className="relative">
                 <h1 className="absolute bottom-full mb-[10px] w-full text-center text-2xl font-bold">
@@ -31,5 +33,6 @@ export default function LearningCardspage() {
                         Back to the Dashboard
                 </Link>
         </main>
+        
     );
 }

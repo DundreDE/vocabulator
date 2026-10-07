@@ -1,7 +1,10 @@
 import Link from "next/link";
+import Navbar from "../components/navbar";
 // import { auth } from "@/app/auth/auth";
 export default function AuthPage() {
       return (
+        <>
+        <Navbar />
         <main>
         <div>
             <div className="mt-4 min-h-screen flex flex-col items-center justify-center gap-4">
@@ -22,6 +25,7 @@ export default function AuthPage() {
             </div>
         </div>
         </main>
+        </>
   );
 }
 
