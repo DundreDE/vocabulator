@@ -15,8 +15,6 @@ interface deck {
 
 }
 
-    
-
 export default function LearningCardspage() {
     return (
        <main className="relative flex min-h-screen items-center justify-center p-6">
@@ -29,4 +27,3 @@ export default function LearningCardspage() {
         </main>
     );
 }
-    

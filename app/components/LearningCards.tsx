@@ -100,7 +100,7 @@ export default function LearningCards() {
                     disabled={finished}
                     className="mt-4 rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600 disabled:opacity-30"
                 >
-                    Flip it
+                    Flip it!
                 </button>
 
                 <button
