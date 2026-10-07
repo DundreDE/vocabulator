@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/dist/client/link";
 import LearningCards from "../components/LearningCards";
 
 interface card { 
@@ -24,6 +25,11 @@ export default function LearningCardspage() {
                 </h1>
                 <LearningCards />
             </div>
+                <Link
+                        href="/dashboard"
+                        className="fixed bottom-4 left-4 inline-block rounded-lg bg-gray-500 px-4 py-2 text-white hover:bg-gray-600">
+                        Back to the Dashboard
+                </Link>
         </main>
     );
 }

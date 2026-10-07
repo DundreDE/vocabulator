@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/dist/client/link";
+
 // import { getcards} from "";
 import { useState, useEffect } from "react";
 
@@ -58,14 +60,19 @@ export default function LearningCards() {
             <div className="flex flex-col items-center justify-center">
                 <h2 className="text-2xl font-bold">Congratulations! You've completed the deck.</h2>
                 <p className="mt-2">You answered {correctCount} out of {cards.length} correctly.</p>
-            <div className="mt-4 flex flex-col items-center justify-center">
+            <div className="mt-4 gap-2 flex flex-col items-center justify-center">
                 
                 <button
                     onClick={restart}
-                    className="mt-4 rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+                    className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
                 >
                     Restart
                 </button>
+                <Link
+                        href="/dashboard"
+                        className="inline-block rounded-lg bg-gray-500 px-4 py-2 text-white hover:bg-gray-600">
+                        Back to the Dashboard
+                </Link>
             </div>
             </div>
         );
