@@ -1,7 +1,10 @@
 import Link from "next/link";
+import Navbar from "../components/navbar";
 
 export default function DashboardPage() {
     return (
+        <>
+            <Navbar />
         <main>
             <div className="flex flex-col min-h-screen items-center justify-center p-6">
                 <div >
@@ -21,5 +24,6 @@ export default function DashboardPage() {
                     </div>
             </div>
         </main>
+        </>
     );
 }
