@@ -3,7 +3,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-
 interface AuthPageProps {
   title: string;
   intro: string;
@@ -25,7 +24,6 @@ export function AuthPage({
                     <code className="font-mono font-bold">{title}</code>
                 </p>
             </div>
-
             <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
                 {steps.map((step, index) => (
                     <Link

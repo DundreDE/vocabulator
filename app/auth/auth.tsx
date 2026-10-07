@@ -9,5 +9,8 @@ interface AuthPageProps {
   user: User | null;
 }
 
-export function auth() {
-  const [user, setUser] = useState<User | null>(null);
+type Mode = "sign-in" | "sign-up";
+
+export function Auth() {
+
+}
