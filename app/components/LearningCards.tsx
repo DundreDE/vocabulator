@@ -17,6 +17,3 @@ interface deck {
 }
 
     
-
-export default function LearningCards() {
-    

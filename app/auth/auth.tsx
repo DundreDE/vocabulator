@@ -11,6 +11,3 @@ interface AuthPageProps {
 
 type Mode = "sign-in" | "sign-up";
 
-export function Auth() {
-
-}
