@@ -1,1 +1,1 @@
-This is a vocab card trainer. 
+This is a vocab card trainer.
