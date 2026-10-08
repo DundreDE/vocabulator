@@ -4,7 +4,7 @@ import Navbar from "../components/navbar";
 export default function AuthPage() {
       return (
         <>
-        <Navbar />
+       
         <main>
         <div>
             <div className="mt-4 min-h-screen flex flex-col items-center justify-center gap-4">
