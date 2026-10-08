@@ -21,7 +21,7 @@ export default function DashboardPage() {
                             Learn this Deck
                         </Link>
                     </div>
-                    </div>
+                </div>
             </div>
         </main>
         </>
