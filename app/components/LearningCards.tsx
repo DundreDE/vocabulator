@@ -30,8 +30,6 @@ export const cards: card[] = [
     { id: 6, front: "No", back: "Nein", learned: false },
 ]
 
-
-
 export default function LearningCards() {
     const [index, setIndex] = useState(0);
     const [flipped, setFlipped] = useState(false);
@@ -60,8 +58,7 @@ export default function LearningCards() {
             <div className="flex flex-col items-center justify-center">
                 <h2 className="text-2xl font-bold">Congratulations! You've completed the deck.</h2>
                 <p className="mt-2">You answered {correctCount} out of {cards.length} correctly.</p>
-            <div className="mt-4 gap-2 flex flex-col items-center justify-center">
-                
+            <div className="mt-4 gap-2 flex flex-col items-center justify-center">   
                 <button
                     onClick={restart}
                     className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
@@ -83,15 +80,11 @@ export default function LearningCards() {
     return (
         <div className="flex flex-col items-center justify-center">
             <div className="flex items-center gap-4">
-
-
                 <div className="flex h-40 w-64 items-center justify-center rounded border p-4 text-center">
                     <p className="text-4xl font-semibold">
                         {flipped ? current.back : current.front}
                     </p>
                 </div>
-
-        
             </div>
             <div className="flex items-center gap-4">
                 <button
@@ -120,6 +113,4 @@ export default function LearningCards() {
             </div>
         </div>
     );
-
 }
-    
