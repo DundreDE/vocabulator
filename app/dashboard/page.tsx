@@ -7,8 +7,8 @@ export default function DashboardPage() {
             <Navbar />
         <main>
             <div className="flex flex-col min-h-screen items-center justify-center p-6">
-                <div >
-                    <h1 className="text-2xl">Dashboard</h1>
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold">Dashboard</h1>
                     <p className="text-lg">Welcome to your dashboard!</p>
                 </div>
                     <div className="flex items-center justify-center p-6 gap-6">

@@ -8,15 +8,16 @@ type NavLink = {
 }
 
 const links: NavLink[] = [
-    { name: "Home", href: "/" },
+//    { name: "Home", href: "/" },
     { name: "Dashboard", href: "/dashboard" },
-    { name: "Auth", href: "/auth" },
+//    { name: "Auth", href: "/auth" },
+    { name: "Settings", href: "/settings" },
 ]
 export default function Navbar() {
     const [open, setOpen] = useState<boolean>(false);
     
     return (
-        <nav className="sticky top-0 z-50 border-b border-white bg-black/70 flex w-full  backdrop-blur items-center justify-between p-4 text-white">
+        <nav className="sticky top-0 z-50 border-b border-white bg-black/70 flex w-full backdrop-blur items-center justify-between p-4 text-white">
 
             <div className="mx-auto flex h-16 max-w-6xl justify-between items-center px-4">
                 <ul className="hidden items-center gap-7 md:flex">
@@ -69,14 +70,7 @@ export default function Navbar() {
                     ))}
                 </ul>
             </div>
-            <div className="hidden md:flex items-center gap-4">
-                <a
-                    href="/auth"
-                    className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-200"
-                >
-                    Login/Register
-                </a>    
-            </div>
+
         </nav>
     );
 }
