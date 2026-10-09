@@ -19,6 +19,8 @@ export default function SettingsPage() {
                         <div className="text-left flx flex-col gap-2 ">
                             <p className="text-lg">Name:</p>
                             <input disabled type="text" defaultValue={name} className="rounded-lg bg-gray-600 px-4 py-2 text-white" />
+                            <p className="text-lg">Email:</p>
+                            <input disabled type="text" defaultValue={email} className="rounded-lg bg-gray-600 px-4 py-2 text-white" />
                         </div>
                         <div className="text-left flex flex-col gap-2">
                            <p className="text-lg">Log out:</p>
@@ -26,11 +28,13 @@ export default function SettingsPage() {
                         </div>
                         <div className="text-left flex flex-col gap-2">
                             <p className="text-lg">Download your data:</p>
-                            <button className="rounded bg-gray-600 hover:bg-gray-800">Download</button>
+                            <button className="rounded bg-gray-800 hover:bg-gray-900">Download</button>
                         </div>
                         <div className="text-left gap-2 flex flex-col rounded-lg ">
                             <hr className="border-t-2 border-solid w-full mx-auto border-red-500" />
-                            <h1 className="text-2xl text-red-500  font-bold">Danger Zone</h1>
+                            <h1 className="text-2xl text-red-500 font-bold">Danger Zone</h1>
+                            <p className="text-lg">Get a password reset link:</p>
+                            <button className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-700">Reset Password</button>
                             <p className="text-lg">Delete your account:</p>
                             <button className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-700">Delete account</button>
                         </div>    

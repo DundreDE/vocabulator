@@ -8,16 +8,15 @@ type NavLink = {
 }
 
 const links: NavLink[] = [
-//    { name: "Home", href: "/" },
     { name: "Dashboard", href: "/dashboard" },
-//    { name: "Auth", href: "/auth" },
     { name: "Settings", href: "/settings" },
 ]
+
 export default function Navbar() {
     const [open, setOpen] = useState<boolean>(false);
-    
+
     return (
-        <nav className="sticky top-0 z-50 border-b border-white bg-black/70 flex w-full backdrop-blur items-center justify-between p-4 text-white">
+        <nav className="sticky top-0 z-50 border-b border-white bg-black/60 flex w-full backdrop-blur items-center justify-between p-2 text-white">
 
             <div className="mx-auto flex h-16 max-w-6xl justify-between items-center px-4">
                 <ul className="hidden items-center gap-7 md:flex">
@@ -25,7 +24,7 @@ export default function Navbar() {
                         <li key={link.href}>
                             <a
                             href={link.href}
-                            className="text-sm font-medium text-white transition-colors hover:text-gray-200"
+                            className="text-lg font-extrabold text-white transition-colors hover:text-gray-200"
                             >
                                 {link.name}
                             </a>
@@ -62,7 +61,7 @@ export default function Navbar() {
                         <li key={link.href}>
                             <a
                             href={link.href}
-                            className="text-sm font-medium text-white transition-colors hover:text-gray-200"
+                            className="text-sm font-bold text-white transition-colors hover:text-gray-200"
                             >
                                 {link.name}
                             </a>

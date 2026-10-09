@@ -23,9 +23,7 @@ export default function LearningCardspage() {
        <main className="relative flex min-h-screen items-center justify-center p-6">
 
             <div className="relative">
-                <h1 className="absolute bottom-full mb-2.5 w-full text-center text-2xl font-bold">
-                    Learn your deck
-                </h1>
+               
                 <LearningCards />
             </div>
                 <Link
