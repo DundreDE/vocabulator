@@ -92,13 +92,13 @@ export default function LearningCards() {
             <div className="mt-4 gap-2 flex flex-col items-center justify-center">   
                 <button
                     onClick={restart}
-                    className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+                    className="rounded bg-taupe-500 px-4 py-2 text-white hover:bg-taupe-600"
                 >
                     Restart the cards
                 </button>
                 <Link
                         href="/dashboard"
-                        className="inline-block rounded-lg bg-gray-500 px-4 py-2 text-white hover:bg-gray-600">
+                        className="inline-block rounded-lg bg-taupe-500 px-4 py-2 text-white hover:bg-taupe-600">
                         Back to the Dashboard
                 </Link>
             </div>
@@ -130,7 +130,7 @@ export default function LearningCards() {
                 <button
                     onClick={() => setFlipped((f) => !f)}
                     disabled={finished}
-                    className="mt-4 rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600 disabled:opacity-30"
+                    className="mt-4 rounded bg-taupe-500 px-4 py-2 text-white hover:bg-taupe-600 disabled:opacity-30"
                 >
                     Flip it!
                 </button>

@@ -24,7 +24,7 @@ export default function Navbar() {
                         <li key={link.href}>
                             <a
                             href={link.href}
-                            className="text-lg font-extrabold text-white transition-colors hover:text-gray-200"
+                            className="text-lg font-extrabold text-white transition-colors hover:text-taupe-200"
                             >
                                 {link.name}
                             </a>
@@ -36,7 +36,7 @@ export default function Navbar() {
                 onClick={() => setOpen((prev) => !prev)}
                 aria-label="Toggle menu"
                 aria-expanded={open}
-                className="rounded-md p-2 right-4 absolute text-white hover:bg-gray-800 md:hidden"
+                className="rounded-md p-2 right-4 absolute text-white hover:bg-taupe-800 md:hidden"
             >
                 <svg
                     className="h-6 w-6"
@@ -55,13 +55,13 @@ export default function Navbar() {
                 </svg>
             </button>
             </div>
-            <div className={`md:hidden ${open ? "block" : "hidden"} absolute top-16 left-0 w-full bg-gray-700`}>
+            <div className={`md:hidden ${open ? "block" : "hidden"} absolute top-16 left-0 w-full bg-taupe-700`}>
                 <ul className="flex flex-col items-center gap-4 p-4">
                     {links.map((link) => (
                         <li key={link.href}>
                             <a
                             href={link.href}
-                            className="text-sm font-bold text-white transition-colors hover:text-gray-200"
+                            className="text-sm font-bold text-white transition-colors hover:text-taupe-200"
                             >
                                 {link.name}
                             </a>
