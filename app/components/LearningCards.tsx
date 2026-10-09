@@ -3,7 +3,9 @@
 import Link from "next/dist/client/link";
 
 // import { getcards} from "";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+
 
 interface card { 
     id: number;
@@ -21,6 +23,8 @@ interface deck {
 
 }
 
+
+
 export const cards: card[] = [
     { id: 1, front: "Hello", back: "Hallo", learned: false },
     { id: 2, front: "Goodbye", back: "Auf Wiedersehen", learned: false },
@@ -30,12 +34,42 @@ export const cards: card[] = [
     { id: 6, front: "No", back: "Nein", learned: false },
 ]
 
+function formatMmSs(ms: number): string {
+    const total = Math.floor(ms / 1000);
+    const mm = String(Math.floor(total / 60)).padStart(2, "0");
+    const ss = String(total % 60).padStart(2, "0");
+    return `${mm}:${ss}`;
+}
+
+
 export default function LearningCards() {
     const [index, setIndex] = useState(0);
     const [flipped, setFlipped] = useState(false);
     const [correctCount, setCorrectCount] = useState(0);
+    const [elapsedMs, setElapsedMs] = useState(0);
+    const startRef = useRef(performance.now());
 
     const finished = index >= cards.length;
+
+    useEffect(() => {
+        const update = () => setElapsedMs(performance.now() - startRef.current);
+        
+        if (finished) {
+            update();
+            return;
+        }
+        
+        const id = setInterval(update, 1000);
+        return () => clearInterval(id);
+    }, [finished]);
+
+    const restart = () => {
+        startRef.current = performance.now();
+        setElapsedMs(0);
+        setIndex(0);
+        setFlipped(false);
+        setCorrectCount(0);
+    }
 
     const next = () => {
         setIndex((i) => i + 1);
@@ -47,23 +81,20 @@ export default function LearningCards() {
         setFlipped(false);
     };
 
-    const restart = () => {
-        setIndex(0);
-        setFlipped(false);
-        setCorrectCount(0);
-    }
+
 
     if (finished) {
+        const timepercard = elapsedMs / cards.length;
         return (
             <div className="flex flex-col items-center justify-center">
                 <h2 className="text-2xl font-bold">Congratulations! You've completed the deck.</h2>
-                <p className="mt-2">You answered {correctCount} out of {cards.length} correctly.</p>
+                <p className="mt-2">You answered {correctCount} out of {cards.length} correctly. In {formatMmSs(elapsedMs)} min. Thats {formatMmSs(timepercard)} min per card.</p>
             <div className="mt-4 gap-2 flex flex-col items-center justify-center">   
                 <button
                     onClick={restart}
                     className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
                 >
-                    Restart
+                    Restart the cards
                 </button>
                 <Link
                         href="/dashboard"
@@ -111,6 +142,9 @@ export default function LearningCards() {
                     Correct!
                 </button>
             </div>
+                <div className="flex items-center gap-4 mt-4">
+                    <p className="text-lg">{formatMmSs(elapsedMs)}</p>
+                </div>
         </div>
     );
 }

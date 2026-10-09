@@ -2,8 +2,7 @@
 
 This is going to be a vocab trainer with flash cards. This project is developed through the hack club ysws "terra"
 
-**Live Demo:** "Link here"
-
+**Live Demo:** [vocabulator](https://vocabulator-cyan.vercel.app)
 ## At this point
 
 This is the state of the second preparation week of terra. I tried creating the most basic systems in this week, I have completed the design and basic functionality of this project, but at this point everything is a prototype. There is no storage system.
