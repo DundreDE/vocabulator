@@ -19,9 +19,9 @@ export default function DashboardPage() {
                     type="button"
                     className="self-end inline-flex right-10 ml-auto justify-end gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-gray-900
                             ring-1 ring-gray-300 transition-colors
-                            hover:bg-gray-100 hover:text-gray-600
-                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600
-                            dark:bg-gray-800 dark:text-gray-100 dark:ring-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                            hover:bg-gray-100 hover:text-gray-700
+                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700
+                            dark:bg-gray-800 dark:text-gray-100 dark:ring-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-400"
                     >
                     <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" className="size-5 shrink-0" aria-hidden="true">
@@ -36,7 +36,7 @@ export default function DashboardPage() {
                             <h1 className="mb-4 text-2xl font-bold">Test Deck</h1>
                         <Link
                             href="/LearningCards"
-                            className="mb-4 inline-block rounded-lg text-center bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+                            className="mb-4 inline-block rounded-lg text-center bg-gray-800 px-4 py-2 text-white hover:bg-gray-900"
                         >
                             Learn this Deck
                         </Link>

@@ -110,6 +110,7 @@ export default function LearningCards() {
 
     return (
         <div className="flex flex-col items-center justify-center">
+             <h1 className="absolute bottom-full mb-2.5 w-full text-center text-2xl font-bold">Learn your deck</h1>
             <div className="flex items-center gap-4">
                 <div className="flex h-40 w-64 items-center justify-center rounded border p-4 text-center">
                     <p className="text-4xl font-semibold">
