@@ -82,23 +82,22 @@ export default function LearningCards() {
     };
 
 
-
     if (finished) {
         const timepercard = elapsedMs / cards.length;
         return (
             <div className="flex flex-col items-center justify-center">
                 <h2 className="text-2xl font-bold">Congratulations! You've completed the deck.</h2>
                 <p className="mt-2">You answered {correctCount} out of {cards.length} correctly. In {formatMmSs(elapsedMs)} min. Thats {formatMmSs(timepercard)} min per card.</p>
-            <div className="mt-4 gap-2 flex flex-col items-center justify-center">   
+            <div className="mt-4 gap-4 flex flex-col items-center justify-center">   
                 <button
                     onClick={restart}
-                    className="rounded bg-taupe-500 px-4 py-2 text-white hover:bg-taupe-600"
+                    className="rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
                 >
                     Restart the cards
                 </button>
                 <Link
                         href="/dashboard"
-                        className="inline-block rounded-lg bg-taupe-500 px-4 py-2 text-white hover:bg-taupe-600">
+                        className="inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900">
                         Back to the Dashboard
                 </Link>
             </div>
@@ -118,11 +117,11 @@ export default function LearningCards() {
                     </p>
                 </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-8">
                 <button
                     onClick={() => answer(false)}
                     disabled={!flipped}
-                    className="mt-4 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 disabled:opacity-30 disabled:hover:bg-red-500"
+                    className="mt-4 rounded bg-red-800 px-4 py-2 text-white hover:bg-red-900 disabled:opacity-30 disabled:hover:bg-red-800"
                 >
                     Wrong!
                 </button>
@@ -130,7 +129,7 @@ export default function LearningCards() {
                 <button
                     onClick={() => setFlipped((f) => !f)}
                     disabled={finished}
-                    className="mt-4 rounded bg-taupe-500 px-4 py-2 text-white hover:bg-taupe-600 disabled:opacity-30"
+                    className="mt-4 rounded bg-amber-800 px-4 py-2 text-white hover:bg-amber-900 disabled:opacity-30"
                 >
                     Flip it!
                 </button>
@@ -138,7 +137,7 @@ export default function LearningCards() {
                 <button
                     onClick={() => answer(true)}
                     disabled={!flipped}
-                    className="mt-4 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 disabled:opacity-30 disabled:hover:bg-green-500"
+                    className="mt-4 rounded bg-green-600 px-4 py-2 text-white hover:bg-green-800 disabled:opacity-30 disabled:hover:bg-green-900"
                 >
                     Correct!
                 </button>

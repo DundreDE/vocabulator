@@ -5,7 +5,7 @@ export default function DashboardPage() {
     return (
         <>
             <Navbar />
-        <main>
+        <main className="">
             <div className="flex flex-col min-h-screen items-center  p-6 gap-3">
                 <div className="text-center">
                     <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -13,15 +13,15 @@ export default function DashboardPage() {
                     
                 </div>
                 <div className="flex w-full flex-col items-center justify-center p-6 gap-6 ">
-                    <hr className="border-t-3 border-solid w-[98%] rounded mx-auto border-taupe-500" />
+                    <hr className="border-t-3 border-solid w-[98%] rounded mx-auto border-stone-800" />
                     <div className="flex w-full justify-end px-6">
                   <button
                     type="button"
-                    className="self-end inline-flex right-10 ml-auto justify-end gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-taupe-900
-                            ring-1 ring-taupe-300 transition-colors
-                            hover:bg-taupe-100 hover:text-taupe-700
-                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-taupe-700
-                            dark:bg-taupe-800 dark:text-taupe-100 dark:ring-taupe-700 dark:hover:bg-taupe-800 dark:hover:text-taupe-400"
+                    className="self-end inline-flex right-10 ml-auto justify-end gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-stone-900
+                            ring-1 ring-stone-300 transition-colors
+                            hover:bg-stone-100 hover:text-amber-800
+                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800
+                            dark:bg-amber-800 dark:text-stone-100 dark:ring-amber-700 dark:hover:bg-amber-900 dark:hover:text-white"
                     >
                     <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" className="size-5 shrink-0" aria-hidden="true">
@@ -30,13 +30,13 @@ export default function DashboardPage() {
                     Edit
                     </button>
                     </div>
-                    <div className="flex items-center justify-center py-6 gap-6 ">
+                    <div className="flex py-6 gap-6 ">
                         
-                        <div className="w-full max-w-sm rounded-2xl bg-taupe-600 px-10 py-6 text-center shadow-md">
+                        <div className="w-full max-w-sm rounded-2xl bg-stone-800 px-10 py-6 text-center shadow-md">
                             <h1 className="mb-4 text-2xl font-bold">Test Deck</h1>
                         <Link
                             href="/LearningCards"
-                            className="mb-4 inline-block rounded-lg text-center bg-taupe-700 px-4 py-2 text-white hover:bg-taupe-800"
+                            className="mb-4 inline-block rounded-lg text-center bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
                         >
                             Learn this Deck
                         </Link>

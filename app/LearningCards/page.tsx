@@ -2,7 +2,6 @@
 import Link from "next/dist/client/link";
 import LearningCards from "../components/LearningCards";
 
-
 interface card { 
     front: string;
     back: string;
@@ -28,7 +27,7 @@ export default function LearningCardspage() {
             </div>
                 <Link
                         href="/dashboard"
-                        className="fixed bottom-4 left-4 inline-block rounded-lg bg-taupe-500 px-4 py-2 text-white hover:bg-taupe-600">
+                        className="fixed bottom-4 left-4 inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900">
                         Back to the Dashboard
                 </Link>
         </main>
