@@ -15,7 +15,6 @@ At this point you can learn the one demo flash card deck and flip the cards and 
 
 - Next.JS with Tailwind CSS and TypeScript
 
-
 ## Running it locally
 
 To run this project locally you must clone the repo and have nodejs installed. Then you can run following commands.
@@ -40,4 +39,4 @@ npm run start
 
 ## AI Usage
 
-I used AI to answer some tailwindcss and typescript questions.
+I used AI to answer some Tailwind CSS and TypeScript questions.
