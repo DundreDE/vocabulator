@@ -1,7 +1,12 @@
 import Link from "next/link";
 import Navbar from "../components/navbar";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+    const supabase = await createClient();
+    const { data: { user } }  = await supabase.auth.getUser();
+    if (!user)  redirect("/auth"); 
     return (
         <>
             <Navbar />

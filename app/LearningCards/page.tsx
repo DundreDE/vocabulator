@@ -1,6 +1,8 @@
-"use client";
+
 import Link from "next/dist/client/link";
 import LearningCards from "../components/LearningCards";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 interface card { 
     front: string;
@@ -16,7 +18,10 @@ interface deck {
 
 }
 
-export default function LearningCardspage() {
+export default async function LearningCardspage() {
+    const supabase = await createClient();
+    const { data: { user } }  = await supabase.auth.getUser();
+    if (!user)  redirect("/auth"); 
     return (
       
        <main className="relative flex min-h-screen items-center justify-center p-6">
