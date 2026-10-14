@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { logout } from "../auth/auth";
 import { updateUsername } from "./actions";
+import UsernameForm from "./UsernameForm";
 
 export default async function SettingsPage() {
     const supabase = await createClient();
@@ -22,15 +23,10 @@ export default async function SettingsPage() {
                         <p className="text-lg">All settings are just demo nothing is working yet.</p>
                     </div>
                     <div className="flex flex-col items-start w-[95%] bg-stone-800 gap-4 p-6 rounded-xl ">
-                        <form action={updateUsername} className="flex flex-col gap-2">
-                        <div className="text-left flx flex-col gap-2 ">
-                            <p className="text-lg">Name:</p>
-                            <input name="username" type="text" max-length="50" defaultValue={username} className="rounded-lg bg-amber-800 px-4 py-2 text-white" />
+                       <UsernameForm username={username} />
                             {/* <p className="text-lg">Email:</p>
                             <input disabled type="text" defaultValue={email} className="rounded-lg bg-amber-800 px-4 py-2 text-white" /> */}
-                        </div>
-                        <button type="submit" className="rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900">Save Changes</button>
-                        </form>
+                       
                         <div className="text-left flex flex-col gap-2">
                         <form>
                            <p className="text-lg">Log out:</p>
