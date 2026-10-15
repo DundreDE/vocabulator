@@ -45,7 +45,7 @@ export default function PasswordResetPage() {
                             {ispending ? 'Resetting...' : 'Reset'} 
                             </button>
                             {state.message && (
-                                <p role="status" className={color}s>{state.message}</p>
+                                <p role="status" className={color}>{state.message}</p>
                             )} 
                         </form>
                     </div>
