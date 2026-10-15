@@ -33,7 +33,7 @@ export default function UsernameForm({ username }: { username: string}) {
                 {ispending ? 'Saving...' : 'Save'}
                 </button>
                 {state.message && (
-                    <p role="status" className="{color}">{state.message}</p>
+                    <p role="status" className={color}>{state.message}</p>
                 )}
 
             </form>
