@@ -7,6 +7,7 @@ export type FormState = {
     message: string;
     username?: string;
 }
+
 export async function sendPasswordResetEmail(
     _prev: FormState,
     formData: FormData
@@ -18,7 +19,8 @@ export async function sendPasswordResetEmail(
 
     const supabase = await createClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/password-reset/update`,
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/password-reset/code-reset`,
+        
     });
     if (error) throw error;
 
