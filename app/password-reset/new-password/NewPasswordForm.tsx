@@ -16,12 +16,11 @@ export default function NewPasswordForm() {
         const { error } = await supabase.auth.updateUser({ password });
         if (error) return setError(error.message);
         router.push("/");
-
-        
+         
     }
     
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+        <div className="bg-stone-800 flex flex-col items-center justify-center min-h-screen gap-4">
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <input
                 type="password"
@@ -31,10 +30,10 @@ export default function NewPasswordForm() {
                 minLength={8}
                 required
             />
-            <button type="submit" className="bg-amber-800 hove: bg-amber-900 text-white px-4 py-2 rounded">
+            <button type="submit" className="bg-amber-800 hover:bg-amber-900 text-white px-4 py-2 rounded">
                 Set New Password
             </button>
-            {error && <p className="text-red-500">{error}</p>}
+            {error && <p className="text-red-600">{error}</p>}
         </form>
         </div>
     );
