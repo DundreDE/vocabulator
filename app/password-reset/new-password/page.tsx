@@ -6,6 +6,6 @@ export default async function NewPasswordPage() {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect("/password-reset?error=no_session")
-    return <NewPasswordForm></NewPasswordForm>
 
+    return <NewPasswordForm></NewPasswordForm>
 }
