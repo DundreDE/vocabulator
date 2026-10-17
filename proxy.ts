@@ -23,7 +23,7 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+if (!user && !request.nextUrl.pathname.startsWith("/auth, /password-reset, /code-reset, /new-password")) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }
 
