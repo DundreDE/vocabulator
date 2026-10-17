@@ -28,7 +28,7 @@ export default async function LearningCardspage() {
 
             <div className="relative">
                
-                <LearningCards />
+                
             </div>
                 <Link
                         href="/dashboard"

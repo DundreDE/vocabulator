@@ -58,6 +58,11 @@ export default async function DashboardPage() {
                     
                         )}
                     </div>
+                        <div>
+                            <Link href="/create-deck" className="bg-amber-800 rounded-xl p-2 hover:bg-amber-900">
+                                Create a New Deck
+                            </Link>
+                        </div>
                 </div>
             </div>
         </main>
