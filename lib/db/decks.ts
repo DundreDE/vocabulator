@@ -48,7 +48,7 @@ export async function getDeckWithCards(deckId: string): Promise<Deck & { cards: 
     return data;
 }
 
-export async function getDecks(): Promise<Deck[]> {
+export async function getDecks(): Promise<DeckWithCount[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("decks")
