@@ -1,5 +1,5 @@
 create table public.decks (
-    id uuid     primary key default gen_random_uuid(),
+    id          uuid primary key default gen_random_uuid(),
     user_id     uuid not null default auth.uid() references auth.users (id) on delete cascade,
     name        text not null,
     created_at  timestamp with time zone default timezone('utc'::text, now())
