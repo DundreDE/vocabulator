@@ -30,6 +30,7 @@ if (!user && !request.nextUrl.pathname.startsWith("/auth, /password-reset, /code
   return response;
 }
 
+
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

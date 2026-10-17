@@ -18,7 +18,7 @@ export type Card = {
 
 
 export type DeckWithCards = Deck & { cards: Card[] };
-
 export type NewCard = Pick<Card, "deck_id" | "front" | "back">;
 export type NewDeck = Pick<Deck, "name">;
 export type CardUpdate = Partial<Pick<Card, "front" | "back" | "learned" | "next_review" | "interval">>;
+export type DeckWithCount = Deck & { card_count: number };
