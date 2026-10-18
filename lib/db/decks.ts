@@ -65,3 +65,11 @@ export async function getDecks(): Promise<DeckWithCount[]> {
 
 }
 
+export async function deleteDeck(deckId: string): Promise<void> {
+    const supabase = await createClient();
+    const { error } = await supabase.from("decks").delete().eq("id", deckId);
+
+    if (error) {
+        throw new Error('Error deleting deck ${deckId}: ${error.message}');
+    }
+}

@@ -1,24 +1,65 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, useRef } from "react";
 import { createDeckAction, type CreateDeckState } from "./action";
 
-const initialState: CreateDeckState = { error: null, name: "" };
+const initialState: CreateDeckState = { error: null, name: "", cards: [] };
 
 export default function CreateDeckForm() {
     const [state, formAction, pending] = useActionState(createDeckAction, initialState);
+    const nextId = useRef(3);
+    const [rowIds, setRowIds] = useState<number[]>([0, 1, 2]);
+
+    const addRow = () => setRowIds((ids) => [...ids, nextId.current++]);
+    const removeRow = (id: number) => setRowIds((ids) => ids.filter((x) => x !== id));
 
     return (
         <form action={formAction} className="flex w-full flex-col gap-2">
             <input 
                 type="text"
-                name="name"
+                name="deckName"
                 placeholder="Deck Name"
                 defaultValue={state.name}
                 required
                 maxLength={100}
                 className="rounded-md border border-amber-800 p-2"
             />
+            <div className="flex flex-col gap-2">
+                <h2 className="text-lg font-semibold">Cards</h2>
+                {rowIds.map((id) => (
+                    <div key={id} className="flex gap-2">
+                        <input
+                        type="text"
+                        name="front"
+                        placeholder="Front"
+                        defaultValue={state.cards[id]?.front ?? ""}
+                        className="min-w-0 flex-1 rounded-md border border-amber-800 p-2"
+                    />
+                        <input
+                        type="text"
+                        name="back"
+                        placeholder="Back"
+                        defaultValue={state.cards[id]?.back ?? ""}
+                        className="min-w-0 flex-1 rounded-md border border-amber-800 p-2"
+                    />
+                        <button
+                            type="button"
+                            onClick={() => removeRow(id)}
+                            className="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                ))}
+            <button 
+                type="button"
+                onClick={addRow}
+                className="rounded-md bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
+            >
+                Add Card
+            </button>    
+            </div>    
+
             {state.error && (
                 <p role="alert" className="text-sm text-red-400">
                     {state.error}
