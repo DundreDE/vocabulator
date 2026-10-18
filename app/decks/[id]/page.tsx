@@ -32,8 +32,5 @@ export default async function DeckPage( {
                 Back to the Dashboard
             </Link>
         </main>
-    );
- 
-
-    
+    );   
 }

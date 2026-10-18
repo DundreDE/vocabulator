@@ -15,7 +15,7 @@ export default function CreateDeckForm() {
 
     return (
         <form action={formAction} className="flex w-full flex-col gap-2">
-            <input 
+            <input
                 type="text"
                 name="deckName"
                 placeholder="Deck Name"
@@ -59,6 +59,7 @@ export default function CreateDeckForm() {
                 Add Card
             </button>    
             </div>    
+
 
             {state.error && (
                 <p role="alert" className="text-sm text-red-400">

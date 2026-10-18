@@ -13,7 +13,7 @@ export type CreateDeckState = {
     cards: CardInput[];
 };
 
-const MAX_CARDS = 100;
+const MAX_CARDS = 200;
 
 export async function createDeckAction(
     _prev: CreateDeckState,
