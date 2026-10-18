@@ -41,3 +41,4 @@ npm run start
 ## AI Usage
 
 I used AI to answer some Tailwind CSS, Supabase and TypeScript questions.
+
