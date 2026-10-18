@@ -16,7 +16,7 @@ export default function UsernameForm({ username }: { username: string}) {
 
         return (
             <form action={formAction} className="flex flex-col gap-2">
-                <p className="text-lg">Username: </p>
+                <p className="text-left text-lg">Username: </p>
                 <input
                     key={shown}
                     className="rounded-lg bg-amber-800 hover:bg-amber-900 px-4 py-2 text-white"
@@ -37,6 +37,5 @@ export default function UsernameForm({ username }: { username: string}) {
                 )}
 
             </form>
-
         );
 }

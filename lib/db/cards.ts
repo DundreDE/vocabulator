@@ -76,3 +76,12 @@ export async function getCard (cardId: string): Promise<Card> {
     }
     return data;
 }
+
+export async function createCards(cards: NewCard[]): Promise<void> {
+    const supabase = await createClient();
+    const { error } = await supabase.from("cards").insert(cards);
+
+    if (error) {
+        throw new Error('Error creating cards: ${error.message}');
+    }
+}

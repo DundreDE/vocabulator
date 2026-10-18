@@ -19,7 +19,7 @@ export default async function SettingsPage() {
                 <div className="flex flex-col min-h-screen items-center text-center p-6 gap-12">
                     <div className="rounded-2xl text-center bg-stone-800 relative top-3.5 p-3 w-[95%] ">
                         <h1 className="align-middle text-3xl font-bold">Settings</h1>
-                        <p className="text-lg">All settings are just demo nothing is working yet.</p>
+                        <p className="text-lg">All settings are just demo nothing is working yet. Only working is Username and logout.</p>
                     </div>
                     <div className="flex flex-col items-start w-[95%] bg-stone-800 gap-4 p-6 rounded-xl ">
                        <UsernameForm username={username} />

@@ -2,7 +2,8 @@ import Link from "next/link";
 import Navbar from "../components/navbar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getDecksByUserId } from "@/lib/db/decks";
+import DeckCard from "@/app/components/DeckCard";
+import { getDecks } from "@/lib/db/decks";
 
 
 
@@ -10,6 +11,9 @@ export default async function DashboardPage() {
     const supabase = await createClient();
     const { data: { user } }  = await supabase.auth.getUser();
     if (!user)  redirect("/auth"); 
+
+    const decks = await getDecks();
+
     return (
         <>
             <Navbar />
@@ -38,18 +42,27 @@ export default async function DashboardPage() {
                     Edit
                     </button>
                     </div>
+                    <h1 className="text-2xl font-bold">My Decks</h1>
                     <div className="flex py-6 gap-6 ">
+                        {decks.length === 0 ? (
+                            <p className="text-lg">You have no decks yet. Create one to get started!</p>
+                        ) : (
+                            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"> 
+                                {decks.map((deck) => (
+                                <li key={deck.id}>
+                                    <DeckCard deck={deck} />
+                                </li>
+                            ))}
                         
-                        <div className="w-full max-w-sm rounded-2xl bg-stone-800 px-10 py-6 text-center shadow-md">
-                            <h1 className="mb-4 text-2xl font-bold">Test Deck</h1>
-                        <Link
-                            href="/LearningCards"
-                            className="mb-4 inline-block rounded-lg text-center bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
-                        >
-                            Learn this Deck
-                        </Link>
+                        </ul>
+                    
+                        )}
                     </div>
-                    </div>
+                        <div>
+                            <Link href="/create-deck" className="bg-amber-800 rounded-xl p-2 hover:bg-amber-900">
+                                Create a New Deck
+                            </Link>
+                        </div>
                 </div>
             </div>
         </main>

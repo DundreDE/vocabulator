@@ -48,7 +48,7 @@ export async function getDeckWithCards(deckId: string): Promise<Deck & { cards: 
     return data;
 }
 
-export async function getDecks(): Promise<Deck[]> {
+export async function getDecks(): Promise<DeckWithCount[]> {
     const supabase = await createClient();
     const { data, error } = await supabase
         .from("decks")
@@ -65,3 +65,11 @@ export async function getDecks(): Promise<Deck[]> {
 
 }
 
+export async function deleteDeck(deckId: string): Promise<void> {
+    const supabase = await createClient();
+    const { error } = await supabase.from("decks").delete().eq("id", deckId);
+
+    if (error) {
+        throw new Error('Error deleting deck ${deckId}: ${error.message}');
+    }
+}

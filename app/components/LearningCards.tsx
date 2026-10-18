@@ -2,6 +2,7 @@
 
 import Link from "next/dist/client/link";
 
+import type { Card } from "@/lib/types";
 
 // import { getcards} from "";
 import { useState, useEffect, useRef } from "react";
@@ -26,14 +27,14 @@ interface deck {
 
 
 
-export const cards: card[] = [
-    { id: 1, front: "Hello", back: "Hallo", learned: false },
-    { id: 2, front: "Goodbye", back: "Auf Wiedersehen", learned: false },
-    { id: 3, front: "Thank you", back: "Danke", learned: false },
-    { id: 4, front: "Please", back: "Bitte", learned: false },
-    { id: 5, front: "Yes", back: "Ja", learned: false },
-    { id: 6, front: "No", back: "Nein", learned: false },
-]
+// export const cards: card[] = [
+//     { id: 1, front: "Hello", back: "Hallo", learned: false },
+//     { id: 2, front: "Goodbye", back: "Auf Wiedersehen", learned: false },
+//     { id: 3, front: "Thank you", back: "Danke", learned: false },
+//     { id: 4, front: "Please", back: "Bitte", learned: false },
+//     { id: 5, front: "Yes", back: "Ja", learned: false },
+//     { id: 6, front: "No", back: "Nein", learned: false },
+// ]
 
 function formatMmSs(ms: number): string {
     const total = Math.floor(ms / 1000);
@@ -43,7 +44,13 @@ function formatMmSs(ms: number): string {
 }
 
 
-export default function LearningCards() {
+export default function LearningCards({
+    deckName,
+    cards,
+}: {
+    deckName: string;
+    cards: Card[];
+}) {
     const [index, setIndex] = useState(0);
     const [flipped, setFlipped] = useState(false);
     const [correctCount, setCorrectCount] = useState(0);
@@ -51,6 +58,8 @@ export default function LearningCards() {
     const startRef = useRef(performance.now());
 
     const finished = index >= cards.length;
+
+    
 
     useEffect(() => {
         const update = () => setElapsedMs(performance.now() - startRef.current);
@@ -81,6 +90,21 @@ export default function LearningCards() {
         setIndex((i) => i + 1);
         setFlipped(false);
     };
+
+    if (cards.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center">
+                <h2 className="text-2xl font-bold">This deck has no cards.</h2>
+                <p className="mt-2">Please add some cards to this deck to start learning.</p>
+                <Link
+                    href="/dashboard"
+                    className="mt-4 inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
+                >
+                    Back to the Dashboard
+                </Link>
+            </div>
+        );
+    }
 
 
     if (finished) {
@@ -138,7 +162,7 @@ export default function LearningCards() {
                 <button
                     onClick={() => answer(true)}
                     disabled={!flipped} 
-                    className="mt-4 rounded bg-gren-800 px-4 py-2 text-white hover:bg-green-900 disabled:opacity-30 disabled:hover:bg-green-900"
+                    className="mt-4 rounded bg-green-800 px-4 py-2 text-white hover:bg-green-900 disabled:opacity-30 disabled:hover:bg-green-900"
                 >
                     Correct!
                 </button>

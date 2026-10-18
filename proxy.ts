@@ -1,6 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const PUBLIC_PATHS = ["/auth", "/password-reset", "/code-reset", "/new-password"]
+
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
@@ -23,7 +25,12 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-if (!user && !request.nextUrl.pathname.startsWith("/auth, /password-reset, /code-reset, /new-password")) {
+  const { pathname } = request.nextUrl;
+  const isPublic = PUBLIC_PATHS.some(
+    (p) => pathname === p || pathname.startsWith('${p}/')
+  )
+
+if (!user && !isPublic) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }
 
