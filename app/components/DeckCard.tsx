@@ -19,13 +19,13 @@ export default function DeckCard({
   editMode: boolean;
 }) {
   return (
-    <>
-      <Link
-        href={`/decks/${deck.id}`}
-        className="block rounded-xl border p-4 shadow-sm transition hover:shadow-md"
-      >
-        <h2 className="mb-4 text-2xl font-bold">{deck.name}</h2>
-        <p className="mb-4 text-lg">Cards: {deck.card_count}</p>
+    <div className="block rounded-xl border flex flex-col gap-2 p-4 shadow-sm transition hover:shadow-md">
+      <h2 className="mb-4 text-2xl font-bold">{deck.name}</h2>
+      <p className="mb-4 text-lg">Cards: {deck.card_count}</p>
+      <Link href={`/decks/${deck.id}`}>
+        <button className="rounded bg-amber-800 hover:bg-amber:900 px-4 py-2 text-white">
+          Learn
+        </button>
       </Link>
       {editMode && (
         <button
@@ -33,11 +33,11 @@ export default function DeckCard({
             if (confirm(`Delete deck and all cards in ${deck.name}?`))
               DeckCardActionDeleteDeck(deck.id);
           }}
-          className="rounded  bg-amber-800 hover:bg-amber:900 px-4 py-2 text-red-800"
+          className="rounded  bg-red-600 hover:bg-amber:900 px-4 py-2 text-white"
         >
           Delete
         </button>
       )}
-    </>
+    </div>
   );
 }

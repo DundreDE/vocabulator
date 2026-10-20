@@ -35,13 +35,13 @@ export async function createDeck(deck: NewDeck, userId: string): Promise<Deck> {
 
 export async function getDeckWithCards(
   deckId: string,
-): Promise<Deck & { cards: any[] }> {
+): Promise<Deck & { cards: string[] }> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("decks")
     .select("*, cards(*)")
     .eq("id", deckId)
-    .single();
+    .maybeSingle();
 
   if (error) {
     throw new Error(

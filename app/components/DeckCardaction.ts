@@ -1,5 +1,9 @@
-import { deleteDeck } from "@/lib/db/decks";
+"use server";
 
-export default function DeckCardActionDeleteDeck(deckId: string) {
+import { deleteDeck } from "@/lib/db/decks";
+import { revalidatePath } from "next/cache";
+
+export default async function DeckCardActionDeleteDeck(deckId: string) {
   deleteDeck(deckId);
+  revalidatePath("/dashboard");
 }

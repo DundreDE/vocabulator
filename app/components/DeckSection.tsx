@@ -43,7 +43,7 @@ export default function DeckSection({ decks }: { decks: DeckWithCount[] }) {
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {decks.map((deck) => (
               <li key={deck.id}>
-                <DeckCard deck={deck} />
+                <DeckCard deck={deck} editMode={editMode} />
               </li>
             ))}
           </ul>
