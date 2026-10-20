@@ -19,12 +19,12 @@ export default function DeckCard({
   editMode: boolean;
 }) {
   return (
-    <div className="block rounded-xl border flex flex-col gap-2 p-4 shadow-sm transition hover:shadow-md">
+    <div className="block rounded-xl border flex flex-col gap-2 p-4 text-center shadow-sm transition hover:shadow-md">
       <h2 className="mb-4 text-2xl font-bold">{deck.name}</h2>
       <p className="mb-4 text-lg">Cards: {deck.card_count}</p>
       <Link href={`/decks/${deck.id}`}>
         <button className="rounded bg-amber-800 hover:bg-amber:900 px-4 py-2 text-white">
-          Learn
+          Learn this deck
         </button>
       </Link>
       {editMode && (
