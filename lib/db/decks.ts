@@ -75,3 +75,7 @@ export async function deleteDeck(deckId: string): Promise<void> {
     throw new Error("Error deleting deck ${deckId}: ${error.message}");
   }
 }
+
+export async function editDeck() {
+  const supabase = await createClient();
+}

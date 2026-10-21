@@ -11,7 +11,7 @@ export default async function DeckPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
-  const { data: user, error: userError } = await supabase.auth.getUser();
+  const { data: user } = await supabase.auth.getUser();
   if (!user) redirect("/auth");
 
   const deck = await getDeckWithCards(id);
