@@ -1,5 +1,8 @@
 "use server";
 
+import { editDeck } from "@/lib/db/decks";
+import { createClient } from "@/lib/supabase/server";
+
 export type CardInput = { front: string; back: string };
 
 export type EditDeckState = {
@@ -51,7 +54,11 @@ export async function editDeckAction(
   if (!user) redirect("/auth");
 
   try {
-    awaited
+    await editDeck({ deckid: deckId, name, userId: user.id }, user.id);
+  } catch (error) {
+    console.error("Error editing deck:", error);
+    return { error: "Failed to edit the dekc. Please try again.", name, cards: rows };
+  }
   }
 
 }

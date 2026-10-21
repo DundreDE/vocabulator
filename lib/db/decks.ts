@@ -76,12 +76,16 @@ export async function deleteDeck(deckId: string): Promise<void> {
   }
 }
 
-export async function editDeck() {
+export async function editDeck(
+  deckId: string,
+  name: string,
+  userId: string,
+): Promise<Deck> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("decks")
-    .update({ name: "Updated Deck Name" })
-    .eq("id", "deck-id")
+    .update({ name: name, user_id: userId })
+    .eq("id", deckId)
     .select("*")
     .single();
 
