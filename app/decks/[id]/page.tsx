@@ -1,5 +1,3 @@
-// import { getDecks } from "@/lib/db/decks";
-// import DeckCard from "@/app/components/DeckCard";
 import LearningCards from "@/app/components/LearningCards";
 import { getDeckWithCards } from "@/lib/db/decks";
 import { createClient } from "@/lib/supabase/server";

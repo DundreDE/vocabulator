@@ -1,10 +1,7 @@
 "use client";
 
-import Link from "next/dist/client/link";
-
 import type { Card } from "@/lib/types";
-
-// import { getcards} from "";
+import Link from "next/dist/client/link";
 import { useEffect, useRef, useState } from "react";
 
 interface card {
@@ -19,15 +16,6 @@ interface deck {
   cards: card[];
   completed: boolean;
 }
-
-// export const cards: card[] = [
-//     { id: 1, front: "Hello", back: "Hallo", learned: false },
-//     { id: 2, front: "Goodbye", back: "Auf Wiedersehen", learned: false },
-//     { id: 3, front: "Thank you", back: "Danke", learned: false },
-//     { id: 4, front: "Please", back: "Bitte", learned: false },
-//     { id: 5, front: "Yes", back: "Ja", learned: false },
-//     { id: 6, front: "No", back: "Nein", learned: false },
-// ]
 
 function formatMmSs(ms: number): string {
   const total = Math.floor(ms / 1000);
