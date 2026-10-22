@@ -2,6 +2,7 @@
 
 import { editDeck } from "@/lib/db/decks";
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export type CardInput = { front: string; back: string };
 
@@ -15,7 +16,7 @@ const MAX_CARDS = 200;
 
 export async function editDeckAction(
   _prev: EditDeckState,
-  formData: FormData,
+  formData: FormData
 ): Promise<EditDeckState> {
   console.log([...formData.entries()]);
   const deckId = String(formData.get("deckId") ?? "").trim();
@@ -30,7 +31,7 @@ export async function editDeckAction(
 
   const cards = rows.filter((c) => c.front || c.back);
 
-  const fail = {error: string): EditDeckState => ({ error, name, cards: rows});
+  const fail = (error: string): EditDeckState => ({ error, name, cards: rows});
 
 
   if (!name) {
