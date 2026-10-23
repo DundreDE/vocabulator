@@ -1,9 +1,22 @@
 "use client";
 
-import { useActionState, useState, useRef } from "react";
+import { useActionState, useRef, useState } from "react";
 import { editDeckAction, type EditDeckState } from "./action";
 
+const initialState: EditDeckState = { error: null, name: "", cards: [] };
+
 export default function EditDeckForm() {
+  const [state, formAction, pending] = useActionState(
+    editDeckAction,
+    initialState,
+  );
+  const nextId = useRef(3);
+  const [rowIds, setRowIds] = useState<number[]>([0, 1, 2]);
+
+  const addRow = () => setRowIds((ids) => [...ids, nextId.current++]);
+  const removeRow = (id: number) =>
+    setRowIds((ids) => ids.filter((x) => x !== id));
+
   return (
     <form action={formAction} className="flex w-full flex-col gap-2">
       <input
