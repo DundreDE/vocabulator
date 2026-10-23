@@ -90,7 +90,7 @@ export async function editDeck(
     .single();
 
   if (error) {
-    throw new Error("Error editing deck: ${error.message}");
+    throw new Error(`Error editing deck: ${error.message}`);
   }
 
   return data;

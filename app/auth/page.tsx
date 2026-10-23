@@ -21,8 +21,15 @@ export default async function AuthPage({
                 {error && <p className="text-sm text-red-600">{error}</p>}
                 {message && <p className="text-sm text-green-700">{message}</p>}
 
-                <input name="email" type="email" required placeholder="Email" />
                 <input
+                 name="email" 
+                 className="rounded-lg text-white placeholder:text-stone-300 border-2 py-1 border-amber-800"
+                 type="email" 
+                 required 
+                 placeholder="Email" />
+
+                <input
+                  className="rounded-lg placeholder:text-stone-300 border-2 border-amber-800 py-1 text-white"
                   name="password"
                   type="password"
                   required
@@ -47,6 +54,12 @@ export default async function AuthPage({
                 className="text-center inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
               >
                 Forgot your Password? Click here to reset it.
+              </Link>
+                <Link
+                href="/dashboard"
+                className="text-center inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
+              >
+                Already logged in? Go to the dashboard.
               </Link>
             </div>
           </div>

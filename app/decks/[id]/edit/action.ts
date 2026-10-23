@@ -2,6 +2,7 @@
 
 import { editDeck } from "@/lib/db/decks";
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
 export type CardInput = { front: string; back: string };
 
@@ -30,35 +31,51 @@ export async function editDeckAction(
 
   const cards = rows.filter((c) => c.front || c.back);
 
-  const fail = {error: string): EditDeckState => ({ error, name, cards: rows});
-
+  const fail = (error: string): EditDeckState => ({ error, name, cards: rows });
 
   if (!name) {
     return { error: "Deck name is required", name, cards: rows };
   }
   if (name.length > 100) {
-    return { error: "Deck name must be less than 100 characters", name, cards: rows };
+    return {
+      error: "Deck name must be less than 100 characters",
+      name,
+      cards: rows,
+    };
   }
   if (cards.length === 0) {
     return { error: "At least one card is required", name, cards: rows };
   }
   if (cards.length > MAX_CARDS) {
-    return { error: `You can only create up to ${MAX_CARDS} cards at a time`, name, cards: rows };
+    return {
+      error: `You can only create up to ${MAX_CARDS} cards at a time`,
+      name,
+      cards: rows,
+    };
   }
   if (cards.some((c) => !c.front || !c.back)) {
-    return { error: "All cards must have both front and back text", name, cards: rows };
+    return {
+      error: "All cards must have both front and back text",
+      name,
+      cards: rows,
+    };
   }
 
   const supabase = await createClient();
-  const { data: { user} } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) redirect("/auth");
 
   try {
-    await editDeck({ deckid: deckId, name, userId: user.id }, user.id);
+    await editDeck(deckId, name, user.id);
   } catch (error) {
     console.error("Error editing deck:", error);
-    return { error: "Failed to edit the dekc. Please try again.", name, cards: rows };
+    return {
+      error: "Failed to edit the deck. Please try again.",
+      name,
+      cards: rows,
+    };
   }
-  }
-
+  redirect(`/dashboard`);
 }
