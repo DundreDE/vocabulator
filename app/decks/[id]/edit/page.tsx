@@ -8,9 +8,9 @@ import EditDeckForm from "./editdeckform";
 export default async function EditDeckPage({
   params,
 }: {
-  params: Promise<{ deckId: string }>;
+  params: Promise<{ id: string }>;
 }) {
-  const { deckId } = await params;
+  const { id: deckId } = await params;
 
   const supabase = await createClient();
   const {
