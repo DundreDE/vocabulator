@@ -3,9 +3,20 @@
 import { useActionState, useRef, useState } from "react";
 import { editDeckAction, type EditDeckState } from "./action";
 
-const initialState: EditDeckState = { error: null, name: "", cards: [] };
+type Rows = {
+  [key: number]: { front: string; back: string };
+};
 
-export default function EditDeckForm() {
+const initialState: EditDeckState = { error: null, name: "", cards: [] };
+type Props = {
+  deck: {
+    id: string;
+    name: string;
+    cards: { front: string; back: string }[];
+  };
+};
+
+export default function EditDeckForm({ deck }: Props) {
   const [state, formAction, pending] = useActionState(
     editDeckAction,
     initialState,
