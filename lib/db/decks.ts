@@ -35,7 +35,7 @@ export async function createDeck(deck: NewDeck, userId: string): Promise<Deck> {
 
 export async function getDeckWithCards(
   deckId: string,
-): Promise<Deck & { cards: Card[] }> {
+): Promise<(Deck & { cards: Card[] }) | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("decks")
@@ -80,17 +80,55 @@ export async function editDeck(
   deckId: string,
   name: string,
   userId: string,
+  cards: { id: string | null; front: string; back: string }[],
 ): Promise<Deck> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("decks")
-    .update({ name: name, user_id: userId })
+    .update({ name })
     .eq("id", deckId)
+    .eq("user_id", userId)
     .select("*")
     .single();
 
   if (error) {
     throw new Error(`Error editing deck: ${error.message}`);
+  }
+
+  const keepIds = cards.filter((c) => c.id).map((c) => c.id as string);
+  const deleteQuery = supabase.from("cards").delete().eq("deck_id", deckId);
+  const { data: deleted, error: delError } =
+    keepIds.length > 0
+      ? await deleteQuery.not("id", "in", `(${keepIds.join(",")})`).select("id")
+      : await deleteQuery.select("id");
+  console.log("deleted cards:", deleted);
+  if (delError) {
+    throw new Error(`Error deleting cards: ${delError.message}`);
+  }
+
+  const existing = cards
+    .filter((c) => c.id)
+    .map((c) => ({
+      id: c.id as string,
+      deck_id: deckId,
+      front: c.front,
+      back: c.back,
+    }));
+  if (existing.length > 0) {
+    const { error: upError } = await supabase.from("cards").upsert(existing);
+    if (upError) {
+      throw new Error(`Error updating cards: ${upError.message}`);
+    }
+  }
+
+  const created = cards
+    .filter((c) => !c.id)
+    .map((c) => ({ deck_id: deckId, front: c.front, back: c.back }));
+  if (created.length > 0) {
+    const { error: insError } = await supabase.from("cards").insert(created);
+    if (insError) {
+      throw new Error(`Error creating cards: ${insError.message}`);
+    }
   }
 
   return data;

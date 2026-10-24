@@ -33,7 +33,7 @@ export default function DeckCard({
           </button>
           <button
             onClick={async () => {
-              router.push("/decks/${deck.id}/edit");
+              router.push(`/decks/${deck.id}/edit`);
             }}
             className="rounded bg-amber-800 hover:bg-amber-900 px-4 py-2 text-white"
           >
