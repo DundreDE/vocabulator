@@ -49,7 +49,7 @@ export default function DeckSection({ decks }: { decks: DeckWithCount[] }) {
           </ul>
         )}
       </div>
-      <div>
+      <div className="flex gap-4 flex-col">
         <Link
           href="/create-deck"
           className="bg-amber-800 rounded p-2 hover:bg-amber-900"
