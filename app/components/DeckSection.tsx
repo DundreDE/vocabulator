@@ -56,6 +56,12 @@ export default function DeckSection({ decks }: { decks: DeckWithCount[] }) {
         >
           Create a New Deck
         </Link>
+        <Link
+          href="/aideckcreation"
+          className="bg-amber-800 rounded p-2 hover:bg-amber-900"
+        >
+          Create a New Deck by scanning a page
+        </Link>
       </div>
     </div>
   );
