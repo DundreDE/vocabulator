@@ -89,7 +89,3 @@ export async function createDeckAction(
   }
   redirect(`/dashboard`);
 }
-
-export async function createDeckbyCameraScan();
-{
-}

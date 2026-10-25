@@ -110,6 +110,7 @@ export async function editDeck(
     .filter((c) => c.id)
     .map((c) => ({
       id: c.id as string,
+
       deck_id: deckId,
       front: c.front,
       back: c.back,
@@ -132,4 +133,33 @@ export async function editDeck(
   }
 
   return data;
+}
+
+export async function createDeckWithCards(
+  userId: string,
+  name: string,
+  cards: { front: string; back: string }[],
+): Promise<Deck> {
+  const supabase = await createClient();
+  const { data: deck, error } = await supabase
+    .from("decks")
+    .insert({ name, user_id: userId })
+    .select("*")
+    .single();
+
+  if (error) {
+    throw new Error(`Error creating deck for user ${userId}: ${error.message}`);
+  }
+
+  const { error: cardError } = await supabase
+    .from("cards")
+    .insert(
+      cards.map((c) => ({ deck_id: deck.id, front: c.front, back: c.back })),
+    );
+
+  if (cardError) {
+    await supabase.from("decks").delete().eq("id", deck.id);
+    throw new Error(`Error creating cards: ${cardError.message}`);
+  }
+  return deck;
 }
