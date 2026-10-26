@@ -91,7 +91,7 @@ export default function LearningCards({
     return (
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-2xl font-bold">
-          Congratulations! You've completed the deck.
+          Congratulations! You completed the deck.
         </h2>
         <p className="mt-2">
           You answered {correctCount} out of {cards.length} correctly. In{" "}
