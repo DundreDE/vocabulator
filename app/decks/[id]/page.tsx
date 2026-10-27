@@ -1,9 +1,9 @@
 import LearningCards from "@/app/components/LearningCards";
 import { getDeckWithCards } from "@/lib/db/decks";
+import { dayString } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { dayString } from "@/lib/srs";
 
 const NEW_CARD_PER_SESSION = 10;
 
@@ -14,12 +14,13 @@ export default async function DeckPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) redirect("/auth");
 
   const deck = await getDeckWithCards(id);
   if (!deck) notFound();
-  
 
   const { data: progress, error } = await supabase
     .from("card_progress")
@@ -38,18 +39,24 @@ export default async function DeckPage({
 
   const dueCards = deck.cards
     .filter((c) => {
-
-      const d = dueOn.get(c.id))
+      const d = dueOn.get(c.id);
       return d !== undefined && d <= today;
     })
-    .sort((a, b) => dueOn.get
+    .sort((a, b) => dueOn.get(a.id)!.localeCompare(dueOn.get(b.id)!));
 
+  const newCards = deck.cards
+    .filter((c) => !dueOn.has(c.id))
+    .slice(0, NEW_CARD_PER_SESSION);
 
   return (
     <main className="relative flex min-h-screen items-center justify-center p-6">
       <div className="relative">
         <h1 className="mb-4 text-2xl text-center font-bold">{deck.name}</h1>
-        <LearningCards key={deck.id} deckName={deck.name} cards={deck.cards} />
+        <LearningCards
+          key={deck.id}
+          deckName={deck.name}
+          cards={[...dueCards, ...newCards]}
+        />
       </div>
       <Link
         href="/dashboard"

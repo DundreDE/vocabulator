@@ -1,7 +1,7 @@
 "use client";
 
-import type { Card } from "@/lib/types";
 import type { Grade } from "@/lib/srs";
+import type { Card } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { gradeCard } from "../decks/[id]/action";
@@ -44,7 +44,6 @@ export default function LearningCards({
   const finished = queue.length === 0;
   const current = queue[0];
 
-
   useEffect(() => {
     const update = () => setElapsedMs(performance.now() - startRef.current);
 
@@ -56,7 +55,6 @@ export default function LearningCards({
     const id = setInterval(update, 1000);
     return () => clearInterval(id);
   }, [finished]);
-
 
   const answer = (grade: Grade) => {
     gradeCard(current.id, grade).catch(() => setSaveError(true));
@@ -78,9 +76,7 @@ export default function LearningCards({
     return (
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-2xl font-bold">Nothing to learn right now.</h2>
-        <p className="mt-2">
-          No cards are due. COme back later.
-        </p>
+        <p className="mt-2">No cards are due. Come back later.</p>
         <Link
           href="/dashboard"
           className="mt-4 inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
@@ -120,8 +116,6 @@ export default function LearningCards({
       </div>
     );
   }
-
-  
 
   return (
     <div className="flex flex-col items-center justify-center">
