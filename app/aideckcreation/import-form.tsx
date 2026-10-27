@@ -119,8 +119,8 @@ export default function ImportForm() {
         <label className="flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 border-dashed border-stone-300 p-8 text-center text-sm">
           <span>
             {phase === "uploading"
-              ? "Wird hochgeladen..."
-              : "Foto einer Vokabelseite auswählen"}
+              ? "Uploading..."
+              : "Choose a photo of a vocabulary page"}
           </span>
           <input
             type="file"
@@ -134,7 +134,7 @@ export default function ImportForm() {
 
       {phase === "processing" && (
         <p className="animate-pulse rounded-lg border p-8 text-center text-sm">
-          Seite wird gelesen und in Karten umgewandelt...
+          Processing the image...
         </p>
       )}
 
@@ -147,8 +147,8 @@ export default function ImportForm() {
             placeholder="Deckname"
           />
           <p className="text-sm text-stone-500">
-            Bitte prüfen: {rows.length} Karten erkannt. Fehler kannst du hier
-            korrigieren.
+            Please review: {rows.length} cards detected. You can correct any
+            errors here.
           </p>
 
           <ul className="space-y-2">
@@ -170,7 +170,7 @@ export default function ImportForm() {
                     setRows((r) => r.filter((_, idx) => idx !== i))
                   }
                   className="px-2 text-stone-400 hover:text-red-600"
-                  aria-label="Karte löschen"
+                  aria-label="delete card"
                 >
                   X
                 </button>
@@ -183,7 +183,7 @@ export default function ImportForm() {
             disabled={phase === "saving" || !name.trim() || rows.length === 0}
             className="w-full rounded bg-amber-800 px-4 py-2 font-medium text-white disabled:opacity-50"
           >
-            {phase === "saving" ? "Wird gespeichert..." : "Deck speichern"}
+            {phase === "saving" ? "Saving..." : "Save Deck"}
           </button>
         </>
       )}
