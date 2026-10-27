@@ -3,6 +3,7 @@
 import type { Card } from "@/lib/types";
 import Link from "next/dist/client/link";
 import { useEffect, useRef, useState } from "react";
+import { gradeCard } from "../decks/[id]/action";
 
 interface card {
   id: number;
