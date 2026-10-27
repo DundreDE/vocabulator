@@ -9,7 +9,7 @@ import { gradeCard } from "../decks/[id]/action";
 // interface card {
 //   id: number;
 //   front: string;
-//   back: string;
+//   back: string;ddddddddd
 //   learned: boolean;
 // }
 
