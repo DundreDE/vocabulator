@@ -1,22 +1,23 @@
 "use client";
 
 import type { Card } from "@/lib/types";
-import Link from "next/dist/client/link";
+import type { Grade } from "@/lib/srs";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { gradeCard } from "../decks/[id]/action";
 
-interface card {
-  id: number;
-  front: string;
-  back: string;
-  learned: boolean;
-}
+// interface card {
+//   id: number;
+//   front: string;
+//   back: string;
+//   learned: boolean;
+// }
 
-interface deck {
-  name: string;
-  cards: card[];
-  completed: boolean;
-}
+// interface deck {
+//   name: string;
+//   cards: card[];
+//   completed: boolean;
+// }
 
 function formatMmSs(ms: number): string {
   const total = Math.floor(ms / 1000);
@@ -32,13 +33,17 @@ export default function LearningCards({
   deckName: string;
   cards: Card[];
 }) {
-  const [index, setIndex] = useState(0);
+  const [queue, setQueue] = useState<Card[]>(cards);
+  const [failedIds, setFailedIds] = useState<Set<string>>(new Set());
+  const [saveError, setSaveError] = useState(false);
   const [flipped, setFlipped] = useState(false);
-  const [correctCount, setCorrectCount] = useState(0);
   const [elapsedMs, setElapsedMs] = useState(0);
   const startRef = useRef(performance.now());
 
-  const finished = index >= cards.length;
+  const total = cards.length;
+  const finished = queue.length === 0;
+  const current = queue[0];
+
 
   useEffect(() => {
     const update = () => setElapsedMs(performance.now() - startRef.current);
@@ -52,30 +57,29 @@ export default function LearningCards({
     return () => clearInterval(id);
   }, [finished]);
 
-  const restart = () => {
-    startRef.current = performance.now();
-    setElapsedMs(0);
-    setIndex(0);
-    setFlipped(false);
-    setCorrectCount(0);
-  };
 
-  const next = () => {
-    setIndex((i) => i + 1);
-    setFlipped(false);
-  };
-  const answer = (correct: boolean) => {
-    if (correct) setCorrectCount((c) => c + 1);
-    setIndex((i) => i + 1);
+  const answer = (grade: Grade) => {
+    gradeCard(current.id, grade).catch(() => setSaveError(true));
+
+    setQueue((q) => {
+      const [first, ...rest] = q;
+      if (grade === "good") return rest;
+      const pos = Math.min(3, rest.length);
+      return [...rest.slice(0, pos), first, ...rest.slice(pos)];
+    });
+
+    if (grade === "again") {
+      setFailedIds((s) => new Set(s).add(current.id));
+    }
     setFlipped(false);
   };
 
   if (cards.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center">
-        <h2 className="text-2xl font-bold">This deck has no cards.</h2>
+        <h2 className="text-2xl font-bold">Nothing to learn right now.</h2>
         <p className="mt-2">
-          Please add some cards to this deck to start learning.
+          No cards are due. COme back later.
         </p>
         <Link
           href="/dashboard"
@@ -88,6 +92,7 @@ export default function LearningCards({
   }
 
   if (finished) {
+    const correctFirstTry = total - failedIds.size;
     const timepercard = elapsedMs / cards.length;
     return (
       <div className="flex flex-col items-center justify-center">
@@ -95,17 +100,16 @@ export default function LearningCards({
           Congratulations! You completed the deck.
         </h2>
         <p className="mt-2">
-          You answered {correctCount} out of {cards.length} correctly. In{" "}
+          You answered {correctFirstTry} out of {total} correctly. In{" "}
           {formatMmSs(elapsedMs)} min. Thats {formatMmSs(timepercard)} min per
           card.
         </p>
+        {saveError && (
+          <p className="mt-2 text-red-600">
+            There was an error saving your progress. Please try again.
+          </p>
+        )}
         <div className="mt-4 gap-4 flex flex-col items-center justify-center">
-          <button
-            onClick={restart}
-            className="rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
-          >
-            Restart the cards
-          </button>
           <Link
             href="/dashboard"
             className="inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
@@ -117,7 +121,7 @@ export default function LearningCards({
     );
   }
 
-  const current = cards[index];
+  
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -133,7 +137,7 @@ export default function LearningCards({
       </div>
       <div className="flex items-center gap-8">
         <button
-          onClick={() => answer(false)}
+          onClick={() => answer("again")}
           disabled={!flipped}
           className="mt-4 rounded bg-red-800 px-4 py-2 text-white hover:bg-red-900 disabled:opacity-30 disabled:hover:bg-red-800"
         >
@@ -149,7 +153,7 @@ export default function LearningCards({
         </button>
 
         <button
-          onClick={() => answer(true)}
+          onClick={() => answer("good")}
           disabled={!flipped}
           className="mt-4 rounded bg-green-800 px-4 py-2 text-white hover:bg-green-900 disabled:opacity-30 disabled:hover:bg-green-900"
         >
