@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { logout } from "../auth/auth";
 import Navbar from "../components/navbar";
 import UsernameForm from "./UsernameForm";
+import MaxNewCardsForm from "./maxnewcardsform";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -28,16 +29,8 @@ export default async function SettingsPage() {
               Username and logout.
             </p>
           </div>
-          <div className="flex flex-col items-center w-[95%] bg-stone-800 gap-4 p-6 rounded-xl ">
-            <p className="text-lg">Max new cards per session:</p>
-            <input
-              type="number"
-              name="maxNewCardsPerSession"
-              defaultValue={settings.maxNewCardsPerSession}
-              className="rounded-lg bg-amber-800 px-4 py-2 text-white"
-            />
-          </div>
           <div className="flex flex-col items-start w-[95%] bg-stone-800 gap-4 p-6 rounded-xl ">
+            <MaxNewCardsForm initial={settings.maxNewCardsPerSession} />
             <UsernameForm username={username} />
 
             <p className="text-lg">Email:</p>

@@ -1,11 +1,10 @@
 import LearningCards from "@/app/components/LearningCards";
 import { getDeckWithCards } from "@/lib/db/decks";
+import { getSettings } from "@/lib/db/settings";
 import { dayString } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-
-const NEW_CARD_PER_SESSION = 10;
 
 export default async function DeckPage({
   params,
@@ -18,6 +17,8 @@ export default async function DeckPage({
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/auth");
+
+  const settings = await getSettings(user.id);
 
   const deck = await getDeckWithCards(id);
   if (!deck) notFound();
@@ -46,7 +47,7 @@ export default async function DeckPage({
 
   const newCards = deck.cards
     .filter((c) => !dueOn.has(c.id))
-    .slice(0, NEW_CARD_PER_SESSION);
+    .slice(0, settings.maxNewCardsPerSession);
 
   return (
     <main className="relative flex min-h-screen items-center justify-center p-6">
