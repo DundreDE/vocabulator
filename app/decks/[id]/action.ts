@@ -8,6 +8,10 @@ import {
 } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/server";
 
+function isCorrect(grade: Grade) {
+  return grade !== "again";
+}
+
 export async function gradeCard(cardId: string, grade: Grade) {
   const supabase = await createClient();
 
@@ -45,4 +49,9 @@ export async function gradeCard(cardId: string, grade: Grade) {
     last_reviewed_at: new Date().toISOString(),
   });
   if (saveError) throw saveError;
+
+  const { error: statsError } = await supabase.rpc("record_review", {
+    p_correct: isCorrect(grade),
+  });
+  if (statsError) console.error("Failed to update stats:", statsError.message);
 }
