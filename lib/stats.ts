@@ -1,28 +1,13 @@
 import { dayString } from "@/lib/srs";
-import { createClient } from "@/lib/supabase/client";
-
-export async function recordReview(correct: boolean) {
-  const supabase = createClient();
-  const { error } = await supabase.rpc("record_review", { p_correct: correct });
-  if (error) console.error("Error recording review:", error);
-}
-
-export type UserStats = {
-  current_streak: number;
-  longest_streak: number;
-  last_study_date: string | null;
-  total_reviews: number;
-  total_correct: number;
-};
+import { createClient } from "@/lib/supabase/server";
 
 const dayKey = (offsetDays = 0) =>
   dayString(new Date(Date.now() + offsetDays * 24 * 60 * 60 * 1000));
+
 export async function getStats() {
-  const supabase = createClient();
-  const { data } = await supabase
-    .from("user_stats")
-    .select("*")
-    .maybeSingle<UserStats>();
+  const supabase = await createClient();
+  const { data } = await supabase.from("user_stats").select("*").maybeSingle();
+
   const s = data ?? {
     current_streak: 0,
     longest_streak: 0,
@@ -31,40 +16,37 @@ export async function getStats() {
     total_correct: 0,
   };
 
-  const today = dayKey(new Date());
-  const yesterday = dayKey(new Date(Date.now() - 24 * 60 * 60 * 1000));
-  const alive = s.last_study_date === today || s.last_study_date === yesterday;
+  const today = dayKey();
+  const alive = s.last_study_date === today || s.last_study_date === dayKey(-1);
 
   return {
     streak: alive ? s.current_streak : 0,
     longest: s.longest_streak,
     studiedToday: s.last_study_date === today,
     total: s.total_reviews,
-    accuracy: s.total_reviews
+    accuracy: s.total_correct
       ? Math.round((s.total_correct / s.total_reviews) * 100)
       : 0,
   };
 }
 
 export async function getDueForecast() {
-  const supabase = createClient();
-  const dayStart = (offset: number) => {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() + offset);
-    return d.toISOString();
-  };
-  const count = async (until: string) => {
-    const { count } = await supabase
-      .from("cards")
-      .select("id", { count: "exact", head: true })
-      .lt("due_at", until);
+  const supabase = await createClient();
+  const count = async (build: (q: any) => any) => {
+    const { count } = await build(
+      supabase
+
+        .from("card_progress")
+        .select("card_id", { count: "exact", head: true }),
+    );
     return count ?? 0;
   };
+
   const [today, tomorrow, week] = await Promise.all([
-    count(dayStart(1)),
-    count(dayStart(2)),
-    count(dayStart(8)),
+    count((q) => q.lte("due_on", dayKey())),
+    count((q) => q.eq("due_on", dayKey(1))),
+    count((q) => q.lte("due_on", dayKey(7))),
   ]);
+
   return { today, tomorrow, week };
 }

@@ -7,7 +7,7 @@ type Props = {
   due: { today: number; tomorrow: number; week: number };
 };
 
-export function StatsPage({
+export function Stats({
   streak,
   longest,
   studiedToday,
@@ -32,7 +32,7 @@ export function StatsPage({
     },
   ];
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-6">
+    <div className="mx-auto grid w-full max-w-4xl grid-cols-2 gap-4 md:grid-cols-4">
       {items.map((i) => (
         <div key={i.label} className="rounded-xl border p-4">
           <p className="text-sm text-neutral-500">{i.label}</p>
