@@ -14,7 +14,7 @@ export default function StartLearning({ deckId }: { deckId: string }) {
   const [direction, setDirection] = useState<Direction>("front-back");
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col text-center gap-3">
       <div
         role="radiogroup"
         className="inline-flex gap-1 rounded-lg border p-1"
