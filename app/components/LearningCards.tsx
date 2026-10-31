@@ -4,7 +4,7 @@ import type { Grade } from "@/lib/srs";
 import type { Card } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { gradeCard } from "../decks/[id]/action";
+import { gradeCard } from "../decks/[id]/learn/action";
 
 // interface card {
 //   id: number;
