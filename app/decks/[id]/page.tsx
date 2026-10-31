@@ -1,49 +1,20 @@
-"use client";
+import StartLearning from "@/app/components/StartLearning";
+import { getDeckWithCards } from "@/lib/db/decks";
+import { notFound } from "next/navigation";
 
-import type { Direction } from "@/lib/direction";
-import Link from "next/link";
-import { useState } from "react";
-
-const options: { value: Direction; label: string }[] = [
-  { value: "front-back", label: "Front to Back" },
-  { value: "back-front", label: "Back to Front" },
-  { value: "both", label: "Both" },
-];
-
-export function StartLearning({ deckId }: { deckId: string }) {
-  const [direction, setDirection] = useState<Direction>("front-back");
+export default async function DeckPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const deck = await getDeckWithCards(id);
+  if (!deck) notFound();
 
   return (
-    <div className="flex flex-col gap-3">
-      <div
-        role="radiogroup"
-        className="inline-flex gap-1 rounded-lg border p-1"
-      >
-        {options.map((o) => (
-          <button
-            key={o.value}
-            type="button"
-            role="radio"
-            aria-checked={direction === o.value}
-            onClick={() => setDirection(o.value)}
-            className={`rounded-md px-3 py-1.5 test-sm transition ${direction === o.value ? "bg-indigo-600 text-white" : "hover:bg-gray-100 dark:hover:ng-gray-800"}`}
-          >
-            {o.label}
-          </button>
-        ))}
-      </div>
-      <Link
-        href={`/decks/${deckId}/learn?direction=${direction}`}
-        className="rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
-      >
-        Start Learning
-      </Link>
-      <Link
-        href={`/dashboard`}
-        className="rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
-      >
-        Back to the Dashboard
-      </Link>
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-4">
+      <h1 className="text-2xl font-bold">{deck.name}</h1>
+      <StartLearning deckId={deck.id} />
+    </main>
   );
 }

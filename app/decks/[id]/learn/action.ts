@@ -8,11 +8,16 @@ import {
 } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/server";
 
+type Dir = "front-back" | "back-front";
+
 function isCorrect(grade: Grade) {
   return grade !== "again";
 }
 
-export async function gradeCard(cardId: string, grade: Grade) {
+export async function gradeCard(cardId: string, grade: Grade, direction: Dir) {
+  if (direction !== "front-back" && direction !== "back-front") {
+    throw new Error(`Invalid direction: ${direction}`);
+  }
   const supabase = await createClient();
 
   const {
@@ -26,6 +31,7 @@ export async function gradeCard(cardId: string, grade: Grade) {
     .select("ease, interval_days, repetition")
     .eq("card_id", cardId)
     .eq("user_id", user.id)
+    .eq("direction", direction)
     .maybeSingle();
   if (loadError) throw loadError;
 
@@ -39,15 +45,19 @@ export async function gradeCard(cardId: string, grade: Grade) {
 
   const result = review(state, grade);
 
-  const { error: saveError } = await supabase.from("card_progress").upsert({
-    user_id: user.id,
-    card_id: cardId,
-    ease: result.ease,
-    interval_days: result.intervalDays,
-    repetition: result.repetition,
-    due_on: result.dueOn,
-    last_reviewed_at: new Date().toISOString(),
-  });
+  const { error: saveError } = await supabase.from("card_progress").upsert(
+    {
+      user_id: user.id,
+      card_id: cardId,
+      direction,
+      ease: result.ease,
+      interval_days: result.intervalDays,
+      repetition: result.repetition,
+      due_on: result.dueOn,
+      last_reviewed_at: new Date().toISOString(),
+    },
+    { onConflict: "user_id,card_id,direction" },
+  );
   if (saveError) throw saveError;
 
   const { error: statsError } = await supabase.rpc("record_review", {
