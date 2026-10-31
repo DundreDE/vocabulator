@@ -61,6 +61,8 @@ export async function gradeCard(cardId: string, grade: Grade, direction: Dir) {
   if (saveError) throw saveError;
 
   const { error: statsError } = await supabase.rpc("record_review", {
+    p_card_id: cardId,
+    p_direction: direction,
     p_correct: isCorrect(grade),
   });
   if (statsError) console.error("Failed to update stats:", statsError.message);
