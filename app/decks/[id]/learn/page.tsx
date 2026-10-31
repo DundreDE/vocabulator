@@ -2,6 +2,7 @@ import LearningCards from "@/app/components/LearningCards";
 import { getDeckWithCards } from "@/lib/db/decks";
 import { getSettings } from "@/lib/db/settings";
 import { parseDirection } from "@/lib/direction";
+import { separateSiblings, shuffle } from "@/lib/shuffle";
 import { dayString } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
@@ -52,23 +53,25 @@ export default async function LearnPage({
     dirs.map((d) => ({ card, direction: d, key: `${card.id}:${d}` })),
   );
 
-  const dueItems = items
-    .filter((i) => {
+  const dueItems = shuffle(
+    items.filter((i) => {
       const d = dueOn.get(i.key);
       return d !== undefined && d <= today;
-    })
-    .sort((a, b) => dueOn.get(a.key)!.localeCompare(dueOn.get(b.key)!));
+    }),
+  );
+  const newItems = shuffle(items.filter((i) => !dueOn.has(i.key))).slice(
+    0,
+    settings.maxNewCardsPerSession,
+  );
 
-  const newItems = items
-    .filter((i) => !dueOn.has(i.key))
-    .slice(0, settings.maxNewCardsPerSession);
-
-  const queue = [...dueItems, ...newItems].map((i) => ({
-    cardId: i.card.id,
-    direction: i.direction,
-    prompt: i.direction === "front-back" ? i.card.front : i.card.back,
-    answer: i.direction === "front-back" ? i.card.back : i.card.front,
-  }));
+  const queue = separateSiblings(
+    [...dueItems, ...newItems].map((i) => ({
+      cardId: i.card.id,
+      direction: i.direction,
+      prompt: i.direction === "front-back" ? i.card.front : i.card.back,
+      answer: i.direction === "front-back" ? i.card.back : i.card.front,
+    })),
+  );
 
   return (
     <main className="relative flex min-h-screen items-center justify-center p-6">
