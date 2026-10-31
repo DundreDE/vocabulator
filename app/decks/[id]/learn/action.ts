@@ -7,6 +7,7 @@ import {
   type Grade,
 } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/server";
+import { safeNext } from "@/lib/safe-next";
 
 type Dir = "front-back" | "back-front";
 
