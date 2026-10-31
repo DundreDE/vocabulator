@@ -1,10 +1,10 @@
 "use client";
 
 import type { Grade } from "@/lib/srs";
-import type { Card } from "@/lib/types";
+import type { QueueItem } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { gradeCard } from "../decks/[id]/action";
+import { gradeCard } from "../decks/[id]/learn/action";
 
 // interface card {
 //   id: number;
@@ -28,21 +28,25 @@ function formatMmSs(ms: number): string {
 
 export default function LearningCards({
   deckName,
-  cards,
+  queue,
 }: {
   deckName: string;
-  cards: Card[];
+  queue: QueueItem[];
 }) {
-  const [queue, setQueue] = useState<Card[]>(cards);
+  const [pending, setPending] = useState<QueueItem[]>(queue);
   const [failedIds, setFailedIds] = useState<Set<string>>(new Set());
   const [saveError, setSaveError] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [elapsedMs, setElapsedMs] = useState(0);
-  const startRef = useRef(performance.now());
+  const startRef = useRef(0);
 
-  const total = cards.length;
-  const finished = queue.length === 0;
-  const current = queue[0];
+  useEffect(() => {
+    startRef.current = performance.now();
+  }, []);
+
+  const total = queue.length;
+  const finished = pending.length === 0;
+  const current = pending[0];
 
   useEffect(() => {
     const update = () => setElapsedMs(performance.now() - startRef.current);
@@ -57,9 +61,11 @@ export default function LearningCards({
   }, [finished]);
 
   const answer = (grade: Grade) => {
-    gradeCard(current.id, grade).catch(() => setSaveError(true));
+    gradeCard(current.cardId, grade, current.direction).catch(() =>
+      setSaveError(true),
+    );
 
-    setQueue((q) => {
+    setPending((q) => {
       const [first, ...rest] = q;
       if (grade === "good") return rest;
       const pos = Math.min(3, rest.length);
@@ -67,12 +73,14 @@ export default function LearningCards({
     });
 
     if (grade === "again") {
-      setFailedIds((s) => new Set(s).add(current.id));
+      setFailedIds((s) =>
+        new Set(s).add(`${current.cardId}:${current.direction}`),
+      );
     }
     setFlipped(false);
   };
 
-  if (cards.length === 0) {
+  if (queue.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-2xl font-bold">Nothing to learn right now.</h2>
@@ -89,7 +97,7 @@ export default function LearningCards({
 
   if (finished) {
     const correctFirstTry = total - failedIds.size;
-    const timepercard = elapsedMs / cards.length;
+    const timepercard = elapsedMs / total;
     return (
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-2xl font-bold">
@@ -125,7 +133,7 @@ export default function LearningCards({
       <div className="flex items-center gap-4">
         <div className="flex h-40 w-64 items-center justify-center rounded border p-4 text-center">
           <p className="text-4xl font-semibold">
-            {flipped ? current.back : current.front}
+            {flipped ? current.answer : current.prompt}
           </p>
         </div>
       </div>
