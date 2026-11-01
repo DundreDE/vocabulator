@@ -6,11 +6,11 @@ This is going to be a vocab trainer with flash cards. This project is developed 
 
 ## At this point
 
-This is the state of the first week of terra. I created edit and delete Decks this week and i created an function where you can scan your vocabs and get a vocab deck.
+This is the state of the second week of terra. I created a stats screen and space repetition you also can share decks with other people.
 
 ## Features
 
-At this point you can create your own flashcard decks and learn these. They are synced trough your account at the supabase auth system db. When you forget your password you can reset it trough the password reset form and get an email with a link for a new password. Every site which should be private without login checks your session tokes and redirects you to the auth page if you are not allowed there. You can delete and edit your decks. Also you can scan a vocab page and an ocr model generatess your deck out of it (experimental).
+At this point you can create your own flashcard decks and learn these. They are synced trough your account at the supabase auth system db. When you forget your password you can reset it trough the password reset form and get an email with a link for a new password. Every site which should be private without login checks your session tokes and redirects you to the auth page if you are not allowed there. You can delete and edit your decks. Also you can scan a vocab page and an ocr model generates your deck out of it (experimental). We now have a stats page where you can check your stats like a streak and a learning heatmap. Space Repetition is now built in the app and you can choose between front-back, back-front, and both mode and all cards are shuffled. You can share decks with other users over the edit function per Link.
 
 ## Tech Stack
 
