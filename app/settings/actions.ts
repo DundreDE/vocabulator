@@ -7,6 +7,7 @@ export type FormState = {
   status: "success" | "error" | "idle" | "info";
   message: string;
   username?: string;
+  value?: number;
 };
 
 export async function updateUsername(
@@ -39,26 +40,35 @@ export async function updateUsername(
 }
 
 export async function updateMaxNewCardsPerSession(
+  _prev: FormState,
   formData: FormData,
-  maxNewCardsPerSession: number,
-) {
+): Promise<FormState> {
+  const value = Number(formData.get("maxNewCardsPerSession"));
+
+  if (!Number.isInteger(value) || value < 1 || value > 100) {
+    return {
+      status: "error",
+      message: "Value must be a whole number between 1 and 100",
+    };
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) throw new Error("User not authenticated");
-
-  if (
-    !Number.isInteger(maxNewCardsPerSession) ||
-    maxNewCardsPerSession < 1 ||
-    maxNewCardsPerSession > 100
-  ) {
-    throw new Error("Value muste be a whole number between 1 and 100");
-  }
+  if (!user) return { status: "error", message: "User not authenticated" };
 
   const { error } = await supabase.from("settings").upsert({
     user_id: user.id,
-    max_new_cards_per_session: maxNewCardsPerSession,
+    max_new_cards_per_session: value,
   });
-  if (error) throw new Error(error.message);
+  if (error) return { status: "error", message: error.message };
+
+  revalidatePath("/settings");
+
+  return {
+    status: "success",
+    message: "Max new cards per session updated successfully!",
+    value,
+  };
 }

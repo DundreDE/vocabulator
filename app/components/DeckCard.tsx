@@ -2,6 +2,7 @@ import DeckCardActionDeleteDeck from "@/app/components/DeckCardaction";
 import { DeckWithCount } from "@/lib/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import ShareButton from "./ShareButton";
 
 export default function DeckCard({
   deck,
@@ -39,6 +40,11 @@ export default function DeckCard({
           >
             Edit
           </button>
+          <ShareButton
+            deckId={deck.id}
+            initialShared={deck.is_shared}
+            token={deck.share_token}
+          />
         </>
       )}
     </div>
