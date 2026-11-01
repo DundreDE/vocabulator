@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function CloneButton({ token }: { token: string }) {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function CloneButton({ token }: { token: string }) {
       return;
     }
 
-    router.push(`/deck/${newId}`);
+    router.push(`/dashboard`);
   }
   return (
     <div>

@@ -16,7 +16,7 @@ export default async function SharedDeckPage({
   if (!uuidRe.test(token)) notFound();
 
   const supabase = await createClient();
-  const { data: deck } = await supabase.rpc("get_shared_decl", {
+  const { data: deck } = await supabase.rpc("get_shared_deck", {
     p_token: token,
   });
   if (!deck) notFound();

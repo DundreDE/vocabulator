@@ -39,7 +39,11 @@ export async function proxy(request: NextRequest) {
   );
 
   if (!user && !isPublic) {
-    return NextResponse.redirect(new URL("/auth", request.url));
+    const url = new URL("/auth", request.url);
+    if (pathname !== "/") {
+      url.searchParams.set("next", pathname + request.nextUrl.search);
+    }
+    return NextResponse.redirect(url);
   }
 
   return response;
