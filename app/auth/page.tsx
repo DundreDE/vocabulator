@@ -3,9 +3,9 @@ import { login, signup } from "./auth";
 export default async function AuthPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; message?: string }>;
+  searchParams: Promise<{ error?: string; message?: string; next?: string }>;
 }) {
-  const { error, message } = await searchParams;
+  const { error, message, next } = await searchParams;
   return (
     <>
       <main>
@@ -18,15 +18,17 @@ export default async function AuthPage({
             </p>
             <div className="flex flex-col gap-2 bg-stone-800 p-4 rounded-lg">
               <form className="mx-auto flex max-w-sm flex-col gap-3 p-8">
+                <input type="hidden" name="next" value={next ?? "/dashboard"} />
                 {error && <p className="text-sm text-red-600">{error}</p>}
                 {message && <p className="text-sm text-green-700">{message}</p>}
 
                 <input
-                 name="email" 
-                 className="rounded-lg text-white placeholder:text-stone-300 border-2 py-1 border-amber-800"
-                 type="email" 
-                 required 
-                 placeholder="Email" />
+                  name="email"
+                  className="rounded-lg text-white placeholder:text-stone-300 border-2 py-1 border-amber-800"
+                  type="email"
+                  required
+                  placeholder="Email"
+                />
 
                 <input
                   className="rounded-lg placeholder:text-stone-300 border-2 border-amber-800 py-1 text-white"
@@ -55,8 +57,8 @@ export default async function AuthPage({
               >
                 Forgot your Password? Click here to reset it.
               </Link>
-                <Link
-                href="/dashboard"
+              <Link
+                href={next ?? "/dashboard"}
                 className="text-center inline-block rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
               >
                 Already logged in? Go to the dashboard.
