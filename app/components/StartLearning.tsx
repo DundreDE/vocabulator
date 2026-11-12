@@ -31,7 +31,7 @@ export default function StartLearning({ deckId }: { deckId: string }) {
       <SegmentedControl options={modeOptions} value={mode} onChange={setMode} />
 
       <Link
-        href={`/decks/${deckId}/learn?direction=${direction}`}
+        href={`/decks/${deckId}/learn?direction=${direction}&mode=${mode}`}
         className="rounded-lg bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
       >
         Start Learning
