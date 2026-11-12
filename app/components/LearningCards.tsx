@@ -1,5 +1,7 @@
 "use client";
 
+import { checkAnswer, type Verdict } from "@/lib/checkAnswer";
+import type { Mode } from "@/lib/mode";
 import type { Grade } from "@/lib/srs";
 import type { QueueItem } from "@/lib/types";
 import Link from "next/link";
@@ -29,15 +31,19 @@ function formatMmSs(ms: number): string {
 export default function LearningCards({
   deckName,
   queue,
+  mode,
 }: {
   deckName: string;
   queue: QueueItem[];
+  mode: Mode;
 }) {
   const [pending, setPending] = useState<QueueItem[]>(queue);
   const [failedIds, setFailedIds] = useState<Set<string>>(new Set());
   const [saveError, setSaveError] = useState(false);
   const [flipped, setFlipped] = useState(false);
   const [elapsedMs, setElapsedMs] = useState(0);
+  const [input, setInput] = useState("");
+  const [verdict, setVerdict] = useState<Verdict | null>(null);
   const startRef = useRef(0);
 
   useEffect(() => {
@@ -78,6 +84,17 @@ export default function LearningCards({
       );
     }
     setFlipped(false);
+    setInput("");
+    setVerdict(null);
+  };
+
+  const submitTyped = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (verdict === null) {
+      setVerdict(checkAnswer(input, current.answer));
+      return;
+    }
+    answer(verdict === "wrong" ? "again" : "good");
   };
 
   if (queue.length === 0) {
@@ -133,35 +150,87 @@ export default function LearningCards({
       <div className="flex items-center gap-4">
         <div className="flex h-40 w-64 items-center justify-center rounded border p-4 text-center">
           <p className="text-4xl font-semibold">
-            {flipped ? current.answer : current.prompt}
+            {mode === "click" && flipped ? current.answer : current.prompt}
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-8">
-        <button
-          onClick={() => answer("again")}
-          disabled={!flipped}
-          className="mt-4 rounded bg-red-800 px-4 py-2 text-white hover:bg-red-900 disabled:opacity-30 disabled:hover:bg-red-800"
-        >
-          Wrong!
-        </button>
 
-        <button
-          onClick={() => setFlipped((f) => !f)}
-          disabled={finished}
-          className="mt-4 rounded bg-amber-800 px-4 py-2 text-white hover:bg-amber-900 disabled:opacity-30"
-        >
-          Flip it!
-        </button>
+      {mode === "type" ? (
+        <form onSubmit={submitTyped} className="mt-4 flex w-64 flex-col gap-3">
+          <input
+            key={`${current.cardId}:${current.direction}:${pending.length}`}
+            autoFocus
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            readOnly={verdict !== null}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="none"
+            spellCheck={false}
+            placeholder="Type..."
+            className={`rounded-lg border-2 bg-transparent px-4 py-3 text-center outline-none ${
+              verdict === "correct"
+                ? "border-green-600"
+                : verdict === "typo"
+                  ? "border-yellow-500"
+                  : verdict === "wrong"
+                    ? "border-red-600"
+                    : "border-neutral-500"
+            }`}
+          />
 
-        <button
-          onClick={() => answer("good")}
-          disabled={!flipped}
-          className="mt-4 rounded bg-green-800 px-4 py-2 text-white hover:bg-green-900 disabled:opacity-30 disabled:hover:bg-green-900"
-        >
-          Correct!
-        </button>
-      </div>
+          {verdict === "typo" && (
+            <p className="text-sm text-yellow-500">
+              Small typo. Correct: {current.answer}
+            </p>
+          )}
+          {verdict === "wrong" && (
+            <p className="text-sm text-red-500">Correct: {current.answer}</p>
+          )}
+          <button
+            type="submit"
+            className="rounded bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
+          >
+            {verdict === null ? "Check" : "Next"}
+          </button>
+
+          {verdict == "wrong" && (
+            <button
+              type="button"
+              onClick={() => answer("good")}
+              className="text-sm underline opacity-70 hover:opacity-100"
+            >
+              I was right.
+            </button>
+          )}
+        </form>
+      ) : (
+        <div className="flex items-center gap-8">
+          <button
+            onClick={() => answer("again")}
+            disabled={!flipped}
+            className="mt-4 rounded bg-red-800 px-4 py-2 text-white hover:bg-red-900 disabled:opacity-30 disabled:hover:bg-red-800"
+          >
+            Wrong!
+          </button>
+
+          <button
+            onClick={() => setFlipped((f) => !f)}
+            disabled={finished}
+            className="mt-4 rounded bg-amber-800 px-4 py-2 text-white hover:bg-amber-900 disabled:opacity-30"
+          >
+            Flip it!
+          </button>
+
+          <button
+            onClick={() => answer("good")}
+            disabled={!flipped}
+            className="mt-4 rounded bg-green-800 px-4 py-2 text-white hover:bg-green-900 disabled:opacity-30 disabled:hover:bg-green-900"
+          >
+            Correct!
+          </button>
+        </div>
+      )}
       <div className="flex items-center gap-4 mt-4">
         <p className="text-lg">{formatMmSs(elapsedMs)}</p>
       </div>

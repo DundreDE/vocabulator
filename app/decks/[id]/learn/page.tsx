@@ -2,6 +2,7 @@ import LearningCards from "@/app/components/LearningCards";
 import { getDeckWithCards } from "@/lib/db/decks";
 import { getSettings } from "@/lib/db/settings";
 import { parseDirection } from "@/lib/direction";
+import { parseMode } from "@/lib/mode";
 import { separateSiblings, shuffle } from "@/lib/shuffle";
 import { dayString } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/server";
@@ -15,12 +16,14 @@ export default async function LearnPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ direction?: string }>;
+  searchParams: Promise<{ direction?: string; mode?: string }>;
 }) {
   const { id } = await params;
-  const direction = parseDirection((await searchParams).direction);
+  const sp = await searchParams;
+  const direction = parseDirection(sp.direction);
   const dirs: Dir[] =
     direction === "both" ? ["front-back", "back-front"] : [direction];
+  const mode = parseMode(sp.mode);
 
   const supabase = await createClient();
   const {
@@ -78,9 +81,10 @@ export default async function LearnPage({
       <div className="relative">
         <h1 className="mb-4 text-2xl text-center font-bold">{deck.name}</h1>
         <LearningCards
-          key={`${deck.id}:${direction}`}
+          key={`${deck.id}:${direction}:${mode}`}
           deckName={deck.name}
           queue={queue}
+          mode={mode}
         />
       </div>
       <Link
