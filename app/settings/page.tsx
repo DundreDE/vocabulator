@@ -1,12 +1,17 @@
 import { getSettings } from "@/lib/db/settings";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { logout } from "../auth/auth";
+import { deleteAccount, logout } from "../auth/auth";
 import Navbar from "../components/navbar";
 import UsernameForm from "./UsernameForm";
 import MaxNewCardsForm from "./maxnewcardsform";
 
-export default async function SettingsPage() {
+export default async function SettingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
   const supabase = await createClient();
   const {
     data: { user },
@@ -51,8 +56,14 @@ export default async function SettingsPage() {
             </div>
             <div className="text-left flex flex-col gap-2">
               <p className="text-lg">Download your data:</p>
-              <button className="rounded bg-amber-800 hover:bg-amber-900">
+              <button className="rounded bg-amber-800 px-4 py-2 hover:bg-amber-900">
                 Download
+              </button>
+            </div>
+            <div className="text-left flex flex-col gap-2">
+              <p className="text-lg">Import your data:</p>
+              <button className="rounded bg-amber-800 px-4 py-2 hover:bg-amber-900">
+                Upload and Import
               </button>
             </div>
             <div className="text-left gap-2 flex flex-col rounded-lg ">
@@ -63,9 +74,37 @@ export default async function SettingsPage() {
                 Reset Password
               </button>
               <p className="text-lg">Delete your account:</p>
-              <button className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-700">
-                Delete account
-              </button>
+
+              {error && <p className="text-sm text-red-400">{error}</p>}
+              <details open={!!error} className="flex flex-col gap-2">
+                <summary className="w-fit cursor-pointer list-none rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-700">
+                  Delete account
+                </summary>
+
+                <form
+                  action={deleteAccount}
+                  className="mt-3 flex flex-col gap-3"
+                >
+                  <p className="text-sm text-red-300">
+                    This is permanent and cannot be undone. Enter your password
+                    to confirm.
+                  </p>
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    autoComplete="current-password"
+                    placeholder="Password"
+                    className="rounded-lg bg-stone-700 px-4 py-2 text-white"
+                  />
+                  <button
+                    type="submit"
+                    className="w-fit rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-800"
+                  >
+                    Delete permanently
+                  </button>
+                </form>
+              </details>
             </div>
           </div>
         </div>
