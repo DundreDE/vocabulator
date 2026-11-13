@@ -225,7 +225,7 @@ export default function LearningCards({
           <button
             onClick={() => answer("good")}
             disabled={!flipped}
-            className="mt-4 rounded bg-green-800 px-4 py-2 text-white hover:bg-green-900 disabled:opacity-30 disabled:hover:bg-green-900"
+            className="mt-4 rounded bg-green-700 px-4 py-2 text-white hover:bg-green-900 disabled:opacity-30 disabled:hover:bg-green-900"
           >
             Correct!
           </button>
