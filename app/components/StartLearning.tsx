@@ -15,6 +15,7 @@ const directionOptions: { value: Direction; label: string }[] = [
 const modeOptions: { value: Mode; label: string }[] = [
   { value: "click", label: "Flip cards" },
   { value: "type", label: "Type answer" },
+  { value: "choice", label: "Choose it like a quiz" },
 ];
 
 export default function StartLearning({ deckId }: { deckId: string }) {

@@ -5,7 +5,7 @@ import type { Mode } from "@/lib/mode";
 import type { Grade } from "@/lib/srs";
 import type { QueueItem } from "@/lib/types";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { gradeCard } from "../decks/[id]/learn/action";
 
 // interface card {
@@ -45,6 +45,7 @@ export default function LearningCards({
   const [input, setInput] = useState("");
   const [verdict, setVerdict] = useState<Verdict | null>(null);
   const startRef = useRef(0);
+  const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
     startRef.current = performance.now();
@@ -86,6 +87,7 @@ export default function LearningCards({
     setFlipped(false);
     setInput("");
     setVerdict(null);
+    setSelected(null);
   };
 
   const submitTyped = (e: React.FormEvent) => {
@@ -96,6 +98,34 @@ export default function LearningCards({
     }
     answer(verdict === "wrong" ? "again" : "good");
   };
+
+  const choices = useMemo(() => {
+    if (!current) return [];
+    const distractors = [
+      ...new Set(
+        queue
+          .filter(
+            (q) =>
+              q.direction === current.direction && q.answer !== current.answer,
+          )
+          .map((q) => q.answer),
+      ),
+    ];
+
+    for (let i = distractors.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [distractors[i], distractors[j]] = [distractors[j], distractors[i]];
+    }
+    const options = [current.answer, ...distractors.slice(0, 2)];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+    return options;
+  }, [current, queue]);
+
+  const effectiveMode: Mode =
+    mode === "choice" && choices.length < 2 ? "click" : mode;
 
   if (queue.length === 0) {
     return (
@@ -150,12 +180,53 @@ export default function LearningCards({
       <div className="flex items-center gap-4">
         <div className="flex h-40 w-64 items-center justify-center rounded border p-4 text-center">
           <p className="text-4xl font-semibold">
-            {mode === "click" && flipped ? current.answer : current.prompt}
+            {effectiveMode === "click" && flipped
+              ? current.answer
+              : current.prompt}
           </p>
         </div>
       </div>
 
-      {mode === "type" ? (
+      {effectiveMode === "choice" ? (
+        <div className="mt-4 flex w-64 flex-col gap-3">
+          {choices.map((opt) => {
+            const isCorrect = opt === current.answer;
+            const isSelected = opt === selected;
+            const style =
+              selected === null
+                ? "border-neutral-500 hover:border-amber-700"
+                : isCorrect
+                  ? "border-green-600"
+                  : isSelected
+                    ? "border-red-600"
+                    : "border-neutral-700 opacity-50";
+            return (
+              <button
+                key={opt}
+                type="button"
+                disabled={selected !== null}
+                onClick={() => setSelected(opt)}
+                className={`rounded-lg border-2 bg-transparent px-4 py-3 text-center ${style}`}
+              >
+                {opt}
+              </button>
+            );
+          })}
+
+          {selected !== null && (
+            <button
+              type="button"
+              autoFocus
+              onClick={() =>
+                answer(selected === current.answer ? "good" : "again")
+              }
+              className="rounded bg-amber-800 px-4 py-2 text-white hover:bg-amber-900"
+            >
+              Next
+            </button>
+          )}
+        </div>
+      ) : effectiveMode === "type" ? (
         <form onSubmit={submitTyped} className="mt-4 flex w-64 flex-col gap-3">
           <input
             key={`${current.cardId}:${current.direction}:${pending.length}`}
