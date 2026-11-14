@@ -1,7 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 type Props = { deckId: string; initialShared: boolean; token: string };
 
@@ -10,10 +10,14 @@ export default function ShareButton({ deckId, initialShared, token }: Props) {
   const [open, setOpen] = useState(false);
   const [shared, setShared] = useState(initialShared);
   const [currentToken, setToken] = useState(token);
-  const [origin, setOrigin] = useState("");
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => setOrigin(window.location.origin), []);
+  const subscribe = () => () => {};
+  const origin = useSyncExternalStore(
+    subscribe,
+    () => window.location.origin,
+    () => "",
+  );
 
   const link = `${origin}/share/${currentToken}`;
 
