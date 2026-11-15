@@ -24,7 +24,6 @@ export default async function DashboardPage() {
             <p className="text-lg">Welcome to your dashboard!</p>
           </div>
           <DeckSection decks={decks} />
-          <ImportDeckDialog />
         </div>
       </main>
     </>

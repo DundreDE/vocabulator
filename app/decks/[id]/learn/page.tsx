@@ -36,20 +36,32 @@ export default async function LearnPage({
   const deck = await getDeckWithCards(id);
   if (!deck) notFound();
 
-  const { data: progress, error } = await supabase
-    .from("card_progress")
-    .select("card_id, direction, due_on")
-    .eq("user_id", user.id)
-    .in(
-      "card_id",
-      deck.cards.map((c) => c.id),
-    )
-    .in("direction", dirs);
-  if (error) throw new Error(error.message);
+  const cardIds = deck.cards.map((c) => c.id);
+  const CHUNK = 100;
+  const chunks: string[][] = [];
+  for (let i = 0; i < cardIds.length; i += CHUNK) {
+    chunks.push(cardIds.slice(i, i + CHUNK));
+  }
+
+  const results = await Promise.all(
+    chunks.map((ids) =>
+      supabase
+        .from("card_progress")
+        .select("card_id, direction, due_on")
+        .eq("user_id", user.id)
+        .in("card_id", ids)
+        .in("direction", dirs),
+    ),
+  );
+
+  const progress = results.flatMap((r) => {
+    if (r.error) throw new Error(r.error.message);
+    return r.data ?? [];
+  });
 
   const today = dayString(new Date());
   const dueOn = new Map<string, string>(
-    (progress ?? []).map((p) => [`${p.card_id}:${p.direction}`, p.due_on]),
+    progress.map((p) => [`${p.card_id}:${p.direction}`, p.due_on]),
   );
 
   const items = deck.cards.flatMap((card) =>

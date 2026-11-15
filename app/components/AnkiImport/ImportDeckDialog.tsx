@@ -3,7 +3,7 @@
 import type { ParseResult } from "@/lib/anki/parseApkg";
 import { saveImport } from "@/lib/anki/saveImport";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MAX_BYTES = 20 * 1024 * 1024;
 
@@ -14,6 +14,14 @@ export default function ImportDeckDialog() {
   const [busy, setBusy] = useState(false);
   const router = useRouter();
   const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!done) return;
+    const timer = setTimeout(() => {
+      router.push("/dashboard");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [done, router]);
 
   async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -63,7 +71,11 @@ export default function ImportDeckDialog() {
     <div className="space-y-4 rounded-xl border p-4">
       <input type="file" accept=".apkg" onChange={onFile} className="text-sm" />
       {error && <p className="text-sm text-red-600">{error}</p>}
-      {done && <p className="text-sm text-green-600">Imported succesful.</p>}
+      {done && (
+        <p className="text-sm text-green-600">
+          Imported succesful. You now get transfered to the Dashboard.
+        </p>
+      )}
 
       {result && (
         <div className="space-y-3">
@@ -86,7 +98,7 @@ export default function ImportDeckDialog() {
           <button
             onClick={onImport}
             disabled={busy || result.cards.length === 0}
-            className="rounded bg-black px-4 py-2 text-white disabled:opacity-50"
+            className="rounded bg-amber-800 hover:bg-amber-900 px-4 py-2 text-white disabled:opacity-50"
           >
             {busy ? "Importing..." : "Import"}
           </button>
