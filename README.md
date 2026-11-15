@@ -6,11 +6,11 @@ This is going to be a vocab trainer with flash cards. This project is developed 
 
 ## At this point
 
-This is the state of the second week of terra. I created a stats screen and space repetition you also can share decks with other people.
+This is the state of the 4. week of terra. I created 2 different learning types: Typing and quiz mode. Also you can import Anki decks though the .apkg file now. And you can delete your account.
 
 ## Features
 
-At this point you can create your own flashcard decks and learn these. They are synced trough your account at the supabase auth system db. When you forget your password you can reset it trough the password reset form and get an email with a link for a new password. Every site which should be private without login checks your session tokes and redirects you to the auth page if you are not allowed there. You can delete and edit your decks. Also you can scan a vocab page and an ocr model generates your deck out of it (experimental). We now have a stats page where you can check your stats like a streak and a learning heatmap. Space Repetition is now built in the app and you can choose between front-back, back-front, and both mode and all cards are shuffled. You can share decks with other users over the edit function per Link.
+This is an vocab trainer. Create, edit and learn vocab deck. Your decks from your account is shareable through links. You can learn your vocabs in three modes: Flipping card mdoe, typing mode and quiz mode. Also you can import anki decks or scan your vocabs and and ai makes is to a new deck.
 
 ## Tech Stack
 
