@@ -1,3 +1,4 @@
+import ImportDeckDialog from "@/app/components/AnkiImport/ImportDeckDialog";
 import DeckSection from "@/app/components/DeckSection";
 import { getDecks } from "@/lib/db/decks";
 import { createClient } from "@/lib/supabase/server";
