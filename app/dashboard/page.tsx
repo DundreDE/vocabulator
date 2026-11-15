@@ -1,3 +1,4 @@
+import ImportDeckDialog from "@/app/components/AnkiImport/ImportDeckDialog";
 import DeckSection from "@/app/components/DeckSection";
 import { getDecks } from "@/lib/db/decks";
 import { createClient } from "@/lib/supabase/server";
@@ -23,6 +24,7 @@ export default async function DashboardPage() {
             <p className="text-lg">Welcome to your dashboard!</p>
           </div>
           <DeckSection decks={decks} />
+          <ImportDeckDialog />
         </div>
       </main>
     </>
