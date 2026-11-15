@@ -21,7 +21,7 @@ export function Stats({
       value: `${streak} days`,
       sub: studiedToday
         ? `Longest days in a streak : ${longest}`
-        : "Heute noch lernen!",
+        : "Today to learn!",
     },
     { label: "Cards learned", value: total },
     { label: "Accuracy", value: `${accuracy} %` },

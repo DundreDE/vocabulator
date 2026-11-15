@@ -1,6 +1,7 @@
 "use server";
 
 import { safeNext } from "@/lib/safe-next";
+import { admin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -41,4 +42,34 @@ export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/auth");
+}
+
+export async function deleteAccount(formData: FormData) {
+  const password = String(formData.get("password") ?? "");
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user?.email) redirect("/auth");
+
+  const { error: pwError } = await supabase.auth.signInWithPassword({
+    email: user.email,
+    password,
+  });
+  if (pwError) {
+    redirect("/settings?error=" + encodeURIComponent("Wrong Password"));
+  }
+
+  const { error: deleteError } = await admin.auth.admin.deleteUser(user.id);
+  if (deleteError) {
+    redirect("/settings?error=" + encodeURIComponent("Deleting failed"));
+  }
+  await supabase.auth.signOut({ scope: "local" });
+
+  redirect(
+    authUrl({ message: "Your account was permanently deleted." }, "/dashboard"),
+  );
 }

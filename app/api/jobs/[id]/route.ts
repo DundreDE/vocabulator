@@ -14,11 +14,10 @@ export async function GET(
     .maybeSingle();
 
   if (error) {
-    console.error("GET /api/jobs/[id] fehlgeschlagen:", error);
-    return Response.json({ error: "Abfrage fehlgeschlagen" }, { status: 500 });
+    console.error("GET /api/jobs/[id] failed:", error);
+    return Response.json({ error: "Job failed" }, { status: 500 });
   }
-  if (!data)
-    return Response.json({ error: "Job nicht gefunden" }, { status: 404 });
+  if (!data) return Response.json({ error: "Job not found" }, { status: 404 });
 
   return Response.json(data);
 }

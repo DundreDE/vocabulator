@@ -57,6 +57,12 @@ export default function DeckSection({ decks }: { decks: DeckWithCount[] }) {
           Create a New Deck
         </Link>
         <Link
+          href="/create-deck/Anki"
+          className="bg-amber-800 rounded p-2 hover:bg-amber-900"
+        >
+          Create a New Deck by Importing an Anki file.
+        </Link>
+        <Link
           href="/aideckcreation"
           className="bg-amber-800 rounded p-2 hover:bg-amber-900"
         >
