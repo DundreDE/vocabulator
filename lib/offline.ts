@@ -1,4 +1,5 @@
 import { del, get, set } from "idb-keyval";
+import type { Grade } from "@/lib/srs";
 
 type QueuedReview = { id: string; cardId: string; rating: number; at: number };
 
