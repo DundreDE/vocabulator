@@ -6,11 +6,11 @@ This is going to be a vocab trainer with flash cards. This project is developed 
 
 ## At this point
 
-This is the state of the 4. week of terra. I created 2 different learning types: Typing and quiz mode. Also you can import Anki decks though the .apkg file now. And you can delete your account. I started with csv export.
+This is the state of the 4. week of terra. I created 2 different learning types: Typing and quiz mode. Also you can import Anki decks trough the .apkg file now. And you can delete your account. I started with csv export.
 
 ## Features
 
-This is an vocab trainer. Create, edit and learn vocab deck. Your decks from your account is shareable through links. You can learn your vocabs in three modes: Flipping card mdoe, typing mode and quiz mode. Also you can import anki decks or scan your vocabs and and AI makes is to a new deck.
+This is an vocab trainer. Create, edit and learn vocab deck. Your decks from your account is shareable through links. You can learn your vocabs in three modes: Flipping card mode, typing mode and quiz mode. Also you can import anki decks or scan your vocabs and and AI makes is to a new deck.
 
 ## Tech Stack
 
