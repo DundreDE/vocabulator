@@ -15,7 +15,12 @@ function isCorrect(grade: Grade) {
   return grade !== "again";
 }
 
-export async function gradeCard(cardId: string, grade: Grade, direction: Dir) {
+export async function gradeCard(
+  cardId: string,
+  grade: Grade,
+  direction: Dir,
+  reviewedAtMs?: number,
+) {
   if (direction !== "front-back" && direction !== "back-front") {
     throw new Error(`Invalid direction: ${direction}`);
   }

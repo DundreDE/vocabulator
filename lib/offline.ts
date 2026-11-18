@@ -1,7 +1,14 @@
 import type { Grade } from "@/lib/srs";
+import { QueueItem } from "@/lib/types";
 import { del, get, set, update } from "idb-keyval";
 
-type QueuedReview = { id: string; cardId: string; grade: Grade; at: number };
+export type QueuedReview = {
+  id: string;
+  cardId: string;
+  grade: Grade;
+  direction: QueueItem["direction"];
+  at: number;
+};
 
 export async function cacheDueCards(userId: string, cards: unknown[]) {
   await set(`due-cards:${userId}`, cards);
@@ -25,7 +32,8 @@ export async function flushQueue(send: (r: QueuedReview) => Promise<void>) {
       try {
         await send(r);
         sent.add(r.id);
-      } catch {
+      } catch (e) {
+        console.error("Sync failed.");
         break;
       }
     }
@@ -41,4 +49,8 @@ export async function flushQueue(send: (r: QueuedReview) => Promise<void>) {
 export async function clearOfflineData(userId: string) {
   await del(`due-cards:${userId}`);
   await del("review-queue");
+}
+
+export async function getCachedDueCards<T = unknown>(userId: string) {
+  return (await get<T[]>(`due-cards:${userId}`)) ?? [];
 }
