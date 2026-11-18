@@ -1,16 +1,9 @@
 "use client";
 
-import { flushQueue } from "@/lib/offline";
-import {
-  DEFAULT_CARD_STATE,
-  review,
-  type CardState,
-  type Grade,
-} from "@/lib/srs";
+import { flushQueue, type QueuedReview } from "@/lib/offline";
+import { DEFAULT_CARD_STATE, review, type CardState } from "@/lib/srs";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect } from "react";
-
-type QueuedReview = { id: string; cardId: string; grade: Grade; at: number };
 
 async function sendReviewToSupabase(r: QueuedReview) {
   const supabase = createClient();

@@ -2,6 +2,7 @@
 
 import { checkAnswer, type Verdict } from "@/lib/checkAnswer";
 import type { Mode } from "@/lib/mode";
+import { queueReview } from "@/lib/offline";
 import type { Grade } from "@/lib/srs";
 import type { QueueItem } from "@/lib/types";
 import Link from "next/link";
@@ -68,9 +69,10 @@ export default function LearningCards({
   }, [finished]);
 
   const answer = (grade: Grade) => {
-    gradeCard(current.cardId, grade, current.direction).catch(() =>
-      setSaveError(true),
-    );
+    const { cardId, direction } = current;
+    gradeCard(cardId, grade, direction).catch(() => {
+      queueReview({ cardId, grade, direction }).catch(() => setSaveError(true));
+    });
 
     setPending((q) => {
       const [first, ...rest] = q;
