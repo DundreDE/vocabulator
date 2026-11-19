@@ -8,19 +8,7 @@ import type { QueueItem } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { gradeCard } from "../decks/[id]/learn/action";
-
-// interface card {
-//   id: number;
-//   front: string;
-//   back: string;ddddddddd
-//   learned: boolean;
-// }
-
-// interface deck {
-//   name: string;
-//   cards: card[];
-//   completed: boolean;
-// }
+import Card from "./SwipeCard";
 
 function formatMmSs(ms: number): string {
   const total = Math.floor(ms / 1000);
@@ -179,15 +167,11 @@ export default function LearningCards({
       <h1 className="absolute bottom-full mb-2.5 w-full text-center text-2xl font-bold">
         Learn your deck
       </h1>
-      <div className="flex items-center gap-4">
-        <div className="flex h-40 w-64 items-center justify-center rounded border p-4 text-center">
-          <p className="text-4xl font-semibold">
-            {effectiveMode === "click" && flipped
-              ? current.answer
-              : current.prompt}
-          </p>
-        </div>
-      </div>
+      <Card
+        flipped={flipped}
+        current={current}
+        effectiveMode={effectiveMode}
+      ></Card>
 
       {effectiveMode === "choice" ? (
         <div className="mt-4 flex w-64 flex-col gap-3">
