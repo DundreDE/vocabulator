@@ -171,6 +171,11 @@ export default function LearningCards({
         flipped={flipped}
         current={current}
         effectiveMode={effectiveMode}
+        onFlip={() => setFlipped((f) => !f)}
+        canSwipe={effectiveMode === "click" && flipped}
+        onSwipe={(direction) =>
+          answer(direction === "right" ? "good" : "again")
+        }
       ></Card>
 
       {effectiveMode === "choice" ? (
