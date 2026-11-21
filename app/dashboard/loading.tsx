@@ -4,11 +4,11 @@ export default function Loading() {
   return (
     <>
       <Navbar />
-      <main className="">
+      <main className="" aria-hidden="true">
         <div className="flex flex-col min-h-screen items-center  p-6 gap-3">
           <div className="text-center rounded bg-slate-600 animate-pulse">
             <h1 className="text-2xl invisible font-bold">Dashboard</h1>
-            <p className="text-lg invisible">Welcome to your dashboard!</p>
+            <p className="text-lg text-transparent invisible">Welcome to your dashboard!</p>
           </div>
           <div className="flex w-full flex-col items-center justify-center p-6 gap-6 ">
             <hr className="border-t-3 border-solid w-[98%] rounded mx-auto border-stone-800" />
@@ -32,7 +32,7 @@ export default function Loading() {
                 Edit
               </button>
             </div>
-            <h1 className="text-2xl font-bold">My Decks</h1>
+            <h1 className="text-2xl font-bold invisible">My Decks</h1>
             <div className="flex py-6 gap-6 ">
               <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <li>
@@ -40,27 +40,26 @@ export default function Loading() {
                     <h2 className="mb-4 text-2xl invisible font-bold"></h2>
                     <p className="mb-4 invisible text-lg">Cards:</p>
                     <button>
-                      <button className="rounded bg-amber-800 hover:bg-amber:900 px-4 py-2 text-white">
-                        Learn this deck
+                      <button className="rounded bg-slate-800 select-none hover:bg-amber:900 px-4 py-2 text-transparent">
+                        Learn this deck 
                       </button>
                     </button>
                   </div>
                 </li>
               </ul>
             </div>
-            <div className="flex text-center  gap-4 flex-col">
-              <button className="bg-slate-600 animate-pulse rounded p-2 ">
+            <div className="flex text-center gap-4 flex-col" aria-hidden="true" >
+              <button className="bg-slate-600  animate-pulse rounded p-2 select-none text-transparent">
                 Create a New Deck
               </button>
-              <button className="bg-slate-600 animate-pulse rounded p-2">
+              <button className="bg-slate-600 animate-pulse rounded p-2 select-none text-transparent">
                 Create a New Deck by Importing an Anki file.
               </button>
-              <button className="bg-slate-600 animate-pulse rounded p-2">
+              <button className="bg-slate-600 animate-pulse rounded p-2 select-none text-transparent">
                 Create a New Deck by scanning a page
               </button>
             </div>
           </div>
-          {/* here deck content */}
         </div>
       </main>
     </>
