@@ -44,7 +44,6 @@ export default function Card({
     const swiped =
       Math.abs(info.offset.x) > SWIPE_OFFSET ||
       Math.abs(info.velocity.x) > SWIPE_VELOCITY;
-
     if (!swiped || !canSwipe) {
       animate(x, 0, { type: "spring", stiffness: 500, damping: 35 });
       return;
