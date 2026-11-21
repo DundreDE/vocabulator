@@ -6,7 +6,7 @@ export default function Loading() {
       <Navbar />
       <main className="">
         <div className="flex flex-col min-h-screen items-center  p-6 gap-3">
-          <div className="text-center rounded bg-gray-600 animate-pulse">
+          <div className="text-center rounded bg-slate-600 animate-pulse">
             <h1 className="text-2xl invisible font-bold">Dashboard</h1>
             <p className="text-lg invisible">Welcome to your dashboard!</p>
           </div>
@@ -16,8 +16,8 @@ export default function Loading() {
               <button
                 className="self-end inline-flex right-10 ml-auto justify-end gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-stone-900
                             ring-1 ring-stone-300 transition-colors
-                            hover:bg-stone-100 animate-pulse hover:text-gray-600
-                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800
+                            hover:bg-stone-100 animate-pulse hover:text-slate-600
+                            focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800
                              dark:text-stone-100  dark:hover:text-white"
               >
                 <svg
@@ -49,13 +49,13 @@ export default function Loading() {
               </ul>
             </div>
             <div className="flex text-center  gap-4 flex-col">
-              <button className="bg-gray-600 animate-pulse rounded p-2 ">
+              <button className="bg-slate-600 animate-pulse rounded p-2 ">
                 Create a New Deck
               </button>
-              <button className="bg-gray-600 animate-pulse rounded p-2">
+              <button className="bg-slate-600 animate-pulse rounded p-2">
                 Create a New Deck by Importing an Anki file.
               </button>
-              <button className="bg-gray-600 animate-pulse rounded p-2">
+              <button className="bg-slate-600 animate-pulse rounded p-2">
                 Create a New Deck by scanning a page
               </button>
             </div>
