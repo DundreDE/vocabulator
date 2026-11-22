@@ -1,16 +1,16 @@
 # Vocabulator
 
-This is going to be a vocab trainer with flash cards. This project is developed through the hack club ysws "terra"
+This is going to be a vocab trainer with flash cards. This project is developed through the hack club ysws "terra".
 
 **Live Demo:** [vocabulator](https://vocabulator-cyan.vercel.app)
 
 ## At this point
 
-This is the state of the 4. week of terra. I created 2 different learning types: Typing and quiz mode. Also you can import Anki decks though the .apkg file now. And you can delete your account. I started with csv export.
+This is the state of the 5. week of terra. I created skeleton loading on most of the sites this week. I also made the first steps into offline learning and created in the card mode the option (mostly for phones) to swipe and click the cards, so you don't have to click the buttons.
 
 ## Features
 
-This is an vocab trainer. Create, edit and learn vocab deck. Your decks from your account is shareable through links. You can learn your vocabs in three modes: Flipping card mdoe, typing mode and quiz mode. Also you can import anki decks or scan your vocabs and and AI makes is to a new deck.
+This is an vocab trainer. Create, edit and learn vocab deck online and the essentials also offline. Your decks from your account are shareable through links. You can learn your vocabs in three modes: Flipping card mode, typing mode and quiz mode. Also you can import anki decks or scan your vocabs and and AI makes is to a new deck.
 
 ## Tech Stack
 

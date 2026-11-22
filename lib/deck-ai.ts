@@ -50,6 +50,6 @@ export async function buildDeck(rawText: string): Promise<DraftDeck> {
     }
   }
   throw new Error(
-    `${String(lastError)}\n\nModell-Antwort:\n${lastAnswer.slice(0, 2000)}`,
+    `${String(lastError)}\n\nmodel answer:\n${lastAnswer.slice(0, 2000)}`,
   );
 }
