@@ -11,14 +11,14 @@ export default function Loading() {
             <p className="text-lg text-transparent invisible">Welcome to your dashboard!</p>
           </div>
           <div className="flex w-full flex-col items-center justify-center p-6 gap-6 ">
-            <hr className="border-t-3 border-solid w-[98%] rounded mx-auto border-stone-800" />
+            <hr className="border-t-3 border-solid w-[98%] rounded mx-auto border-slate-600" />
             <div className="flex w-full justify-end px-6">
               <button
-                className="self-end inline-flex right-10 ml-auto justify-end gap-2 rounded-lg bg-white px-4 py-2 text-sm font-medium text-stone-900
-                            ring-1 ring-stone-300 transition-colors
-                            hover:bg-stone-100 animate-pulse hover:text-slate-600
+                className="self-end inline-flex right-10 ml-auto justify-end gap-2 rounded-lg bg-slate-600 px-4 py-2 text-sm font-medium text-transparent
+                            ring-1 ring-slate-800 transition-colors
+                             animate-pulse 
                             focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-800
-                             dark:text-stone-100  dark:hover:text-white"
+                            "
               >
                 <svg
                   viewBox="0 0 1024 1024"
@@ -35,17 +35,19 @@ export default function Loading() {
             <h1 className="text-2xl font-bold invisible">My Decks</h1>
             <div className="flex py-6 gap-6 ">
               <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <li>
+                {Array.from({ length: 6 }).map((_, i) => (
+                <li key={i}>
                   <div className=" rounded-xl border flex flex-col gap-2 p-4 text-center shadow-sm transition hover:shadow-md">
                     <h2 className="mb-4 text-2xl invisible font-bold"></h2>
                     <p className="mb-4 invisible text-lg">Cards:</p>
                     <button>
-                      <button className="rounded bg-slate-800 select-none hover:bg-amber:900 px-4 py-2 text-transparent">
+                      <button className="rounded bg-slate-600 select-none hover:bg-amber:900 px-4 py-2 text-transparent">
                         Learn this deck 
                       </button>
                     </button>
                   </div>
                 </li>
+                ))}
               </ul>
             </div>
             <div className="flex text-center gap-4 flex-col" aria-hidden="true" >
