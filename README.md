@@ -1,6 +1,6 @@
 # Vocabulator
 
-This is going to be a vocab trainer with flash cards. This project is developed through the hack club ysws "terra".
+This is going to be a vocab trainer with flash cards. This project is developed through the hack club ysws "terra". You can genereate any account without an real email. (Note that password reset isn't working then.)
 
 **Live Demo:** [vocabulator](https://vocabulator-cyan.vercel.app)
 
