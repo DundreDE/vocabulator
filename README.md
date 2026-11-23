@@ -4,6 +4,13 @@ This is going to be a vocab trainer with flash cards. This project is developed 
 
 **Live Demo:** [vocabulator](https://vocabulator-cyan.vercel.app)
 
+## Login credentials
+
+Email: terratester@terratest.com
+Password: terratester@terratest.com
+
+Please don't delete the account thanks.
+
 ## At this point
 
 This is the state of the 5. week of terra. I created skeleton loading on most of the sites this week. I also made the first steps into offline learning and created in the card mode the option (mostly for phones) to swipe and click the cards, so you don't have to click the buttons.
@@ -11,6 +18,20 @@ This is the state of the 5. week of terra. I created skeleton loading on most of
 ## Features
 
 This is an vocab trainer. Create, edit and learn vocab deck online and the essentials also offline. Your decks from your account are shareable through links. You can learn your vocabs in three modes: Flipping card mode, typing mode and quiz mode. Also you can import anki decks or scan your vocabs and and AI makes is to a new deck.
+
+## Some Screenshots
+
+Dashboard:
+
+![Dashboard](./assets/screenshot-2026-11-22_20-29-47-zen.png)
+
+Skeleton Loading:
+
+![Skeleton Loading](./assets/screenshot-2026-11-22_18-25-57-zen.png)
+
+Flipping Cards:
+
+![Flipping Cards](./assets/screenshot-2026-11-20_21-41-37-zen.png)
 
 ## Tech Stack
 
